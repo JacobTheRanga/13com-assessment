@@ -6,35 +6,21 @@
       <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
           <a href="{{url_for('home')}}" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-black text-decoration-none">
-            <img src="{{url_for('static', filename='img/crunchcardlogo.png')}}" height="50" width="50">
+            <img src="{{url_for('static', filename='img/subject.png')}}" height="50" width="50">
           </a>
 
           <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-            {% if not session %}
-            <li>
-              <a href="{{url_for('login')}}" class="nav-link text-black">
-                Login
-              </a>
-            </li>
-            <li>
-              <a href="{{url_for('register')}}" class="nav-link text-black">
-                Register
-              </a>
-            </li>
-            {% endif %}
-            {% if session %}
             <div class="dropdown text-end">
               <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                 {{session['user']}}
                 <img src="{{url_for('static', filename='img/account.png')}}" alt="account" width="40" height="40" class="rounded-circle">
               </a>
               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                <li><a class="dropdown-item" href="{{url_for('dashboard', url=session['url'])}}">Dashboard</a></li>
+                <li><a class="dropdown-item" href="#">Dashboard</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="{{url_for('logout')}}">Logout<img src ="{{url_for('static', filename='img/logout.png')}}" width="20" height="20" class="ms-3"></a></li>
               </ul>
             </div>
-            {% endif %}
           </ul>
         </div>
       </div>

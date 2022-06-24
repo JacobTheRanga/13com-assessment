@@ -1,0 +1,32 @@
+{% extends 'form.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block form %}
+<hr class="my-3">
+<div class="form-floating">
+    <input type="email" name="email" class="form-control" id="floatingInput" placeholder="Email">
+    <label for="floatingInput">Email</label>
+</div>
+<div class="form-floating">
+    <input type="text" name="firstname" class="form-control" id="floatingInput" placeholder="First Name">
+    <label for="floatingInput">First Name</label>
+</div>
+<div class="form-floating">
+    <input type="text" name="lastname" class="form-control" id="floatingInput" placeholder="Last Name">
+    <label for="floatingInput">Last Name</label>
+</div>
+<div class="form-floating">
+    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+    <label for="floatingPassword">Password</label>
+</div>
+<div class="form-floating mb-3">
+    <input type="password" name="confirmpassword" class="form-control" id="floatingPassword" placeholder="Confirm Password">
+    <label for="floatingPassword">Confirm Password</label>
+</div>
+<hr class="my-3">
+<button class="w-100 btn btn-lg bg-primary text-white" type="submit">Register</button>
+<a href="{{url_for('login')}}">
+    <p class="fs-6 fw-light text-black"><u>Already have an account?</u></p>
+</a>
+{% endblock %}

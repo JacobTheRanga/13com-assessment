@@ -1,15 +1,15 @@
-{% extends 'loginRegister.html' %}
+{% extends 'form.html' %}
 
 {% block title %}Login{% endblock %}
 
 {% block form %}
 <hr class="my-3">
 <div class="form-floating">
-    <input type="text" name="emailUser" class="form-control" id="floatingInput" placeholder="Username">
-    <label for="floatingInput">Email/Username</label>
+    <input type="text" name="email" class="form-control" id="floatingInput" placeholder="Email">
+    <label for="floatingInput">Email</label>
 </div>
 <div class="form-floating mb-3">
-    <input type="password" name="pass" class="form-control" id="floatingPassword" placeholder="Password">
+    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
     <label for="floatingPassword">Password</label>
 </div>
 
@@ -20,7 +20,7 @@
 </div>
 <hr class="my-3">
 <button class="w-100 btn btn-lg bg-primary text-white" type="submit">Sign in</button>
-<a href="{{url_for('login')}}">
+<a href="{{url_for('register')}}">
     <p class="fs-6 fw-light text-black"><u>Or create an account</u></p>
 </a>
 {% endblock %}
