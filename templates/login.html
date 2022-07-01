@@ -5,18 +5,21 @@
 {% block form %}
 <hr class="my-3">
 <div class="form-floating">
-    <input type="text" name="email" class="form-control" id="floatingInput" placeholder="Email">
-    <label for="floatingInput">Email</label>
+    <input type="text" name="email" class="form-control" id="email" placeholder="Email">
+    <label for="email">Email</label>
 </div>
-<div class="form-floating mb-3">
-    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
-    <label for="floatingPassword">Password</label>
+<div class="input-group mb-3">
+    <div class="form-floating col-10">
+        <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+        <label for="password">Password</label>
+    </div>
+    <div for="password" class="border d-flex align-items-center justify-content-center col-2"><i class="btn bi bi-eye-slash-fill" id="togglePassword" onclick="passwordView()"></i></div>
 </div>
 
 <div class="checkbox mb-3">
-<label>
-    <input type="checkbox" value="remember-me"> Remember me
-</label>
+    <label>
+        <input type="checkbox" value="remember-me"> Remember me
+    </label>
 </div>
 <hr class="my-3">
 <button class="w-100 btn btn-lg bg-primary text-white" type="submit">Sign in</button>

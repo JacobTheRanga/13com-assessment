@@ -34,9 +34,9 @@ def login():
             )
             userdata = cursor.fetchone()
             if userdata is None:
-                return render_template('/login.html', output = 'There is no user with that email')
+                return render_template('/login.html', error = 'email')
             if pbkdf2_sha256.verify(request.form['password'], userdata['password']) is False:
-                return render_template('/login.html', output = 'Password is incorrect')
+                return render_template('/login.html', error = 'password')
             session['id'] = userdata['userid']
             session['role'] = userdata['role']
             session['user'] = str(userdata['firstname'] + ' ' +userdata['lastname'])

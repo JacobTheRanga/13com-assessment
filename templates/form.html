@@ -7,7 +7,7 @@
         <p class="display-1 fw-bold pb-3">{% block title %}{% endblock %}</p>
 
         {% block form %}{% endblock %}
-        <p class="text-danger">{{output}}</p>
+        <p class="text-danger" id="errorMessage" error="{{error}}"></p>
     </form>
 </div>
 {% endblock %}
