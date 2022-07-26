@@ -15,6 +15,7 @@ def create_connection():
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor
     )
+connection = create_connection()
 
 @app.route('/')
 def home():
@@ -26,21 +27,20 @@ def home():
 def login():
     if request.method != 'POST':
         return render_template('/login.html')
-    with create_connection() as connection:
-        with connection.cursor() as cursor:
-            cursor.execute('select * from users where \
-                            email=%s',
-                            request.form['email']
-            )
-            userdata = cursor.fetchone()
-            if userdata is None:
-                return render_template('/login.html', error = 'email')
-            if pbkdf2_sha256.verify(request.form['password'], userdata['password']) is False:
-                return render_template('/login.html', error = 'password')
-            session['id'] = userdata['userid']
-            session['role'] = userdata['role']
-            session['user'] = str(userdata['firstname'] + ' ' +userdata['lastname'])
-            return redirect(url_for('home'))
+    with connection.cursor() as cursor:
+        cursor.execute('select * from users where \
+                        email=%s',
+                        request.form['email']
+        )
+        userdata = cursor.fetchone()
+        if userdata is None:
+            return render_template('/login.html', error = 'email')
+        if pbkdf2_sha256.verify(request.form['password'], userdata['password']) is False:
+            return render_template('/login.html', error = 'password')
+        session['id'] = userdata['userid']
+        session['role'] = userdata['role']
+        session['user'] = str(userdata['firstname'] + ' ' +userdata['lastname'])
+        return redirect(url_for('home'))
 
 @app.route('/logout')
 def logout():
@@ -51,6 +51,10 @@ def logout():
 def register():
     if request.method != 'POST':
         return render_template('/register.html')
+
+@app.route('/addsubject', methods = ['get', 'post'])
+def addSubject():
+    return render_template('/layout.html')
 
 if __name__ == "__main__":
     app.run(host='localhost', port=5555)
