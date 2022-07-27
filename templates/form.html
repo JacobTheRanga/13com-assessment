@@ -5,7 +5,7 @@
     <form method="post">
         <img src="{{url_for('static', filename='img/subject.png')}}" height="80" width="80">
         <p class="display-1 fw-bold pb-3">{% block title %}{% endblock %}</p>
-
+        <hr class="my-3">
         {% block form %}{% endblock %}
         <p class="text-danger" id="errorMessage" error="{{error}}"></p>
     </form>

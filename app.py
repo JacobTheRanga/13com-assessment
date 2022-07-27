@@ -52,9 +52,38 @@ def register():
     if request.method != 'POST':
         return render_template('/register.html')
 
+def permission(role):
+    if role == 'admin':
+        return True
+    return False
+
 @app.route('/addsubject', methods = ['get', 'post'])
 def addSubject():
-    return render_template('/layout.html')
+    if permission(session['role']) is False:
+        return redirect(url_for('home'))
+    if request.method != 'POST':
+        return render_template('/addSubject.html')
+    with connection.cursor() as cursor:
+        cursor.execute('insert into subjects (\
+                        subjectname,\
+                        startdate,\
+                        enddate\
+                        )\
+                        values (%s, %s, %s)',
+                        (
+                            request.form['addSubject'],
+                            request.form['startDate'],
+                            request.form['endDate']
+                        ))
+        connection.commit()
+        return redirect(url_for('home'))
+
+@app.route('/editsubject', methods = ['get', 'post'])
+def editSubject():
+    if permission(session['role']) is False:
+        return redirect(url_for('home'))
+    if request.method != 'POST':
+        return render_template('/editSubject.html')
 
 if __name__ == "__main__":
     app.run(host='localhost', port=5555)

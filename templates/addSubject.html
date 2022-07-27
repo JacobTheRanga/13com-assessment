@@ -1,0 +1,20 @@
+{% extends 'form.html' %}
+
+{% block title %}Add Subject{% endblock %}
+
+{% block form %}
+<div class="form-floating">
+    <input type="text" name="addSubject" class="form-control" id="addSubject" placeholder="Add Subject">
+    <label for="addSubject">Add Subject</label>
+</div>
+<div class="form-floating">
+    <input type="date" name="startDate" class="form-control" id="startDate" placeholder="startDate">
+    <label for="startDate">Start Date</label>
+</div>
+<div class="form-floating">
+    <input type="date" name="endDate" class="form-control" id="endDate" placeholder="endDate">
+    <label for="endDate">End Date</label>
+</div>
+<hr class="my-3">
+<button class="w-100 btn btn-lg bg-primary text-white" type="submit">Add Subject</button>
+{% endblock %}

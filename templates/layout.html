@@ -10,20 +10,18 @@
           </a>
 
           <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+            {% if session['role'] == 'admin' %}
+            <li>
+              <a href="{{url_for('addSubject')}}" class="nav-link text-secondary">
+                Add Subject
+              </a>
+            </li>
+            {% endif %}
             <div class="dropdown text-end">
               <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                 {{session['user']}}
                 <img src="{{url_for('static', filename='img/account.png')}}" alt="account" width="40" height="40" class="rounded-circle">
               </a>
-              <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-                {% if session['role'] == 'admin' %}
-                <li>
-                  <a href="{{url_for('addSubject')}}" class="nav-link text-secondary">
-                    Add Subject
-                  </a>
-                </li>
-                {% endif %}
-              </ul>
               <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                 <li><a class="dropdown-item" href="#">Dashboard</a></li>
                 <li><hr class="dropdown-divider"></li>
