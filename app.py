@@ -83,7 +83,10 @@ def editSubject():
     if permission(session['role']) is False:
         return redirect(url_for('home'))
     if request.method != 'POST':
-        return render_template('/editSubject.html')
+        with connection.cursor() as cursor:
+            cursor.execute('select * from subjects')
+            subjects = cursor.fetchall()
+        return render_template('/editSubject.html', subjects = subjects)
 
 if __name__ == "__main__":
     app.run(host='localhost', port=5555)

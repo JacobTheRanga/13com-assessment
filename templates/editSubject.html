@@ -1,0 +1,30 @@
+{% extends 'form.html' %}
+
+{% block title %}Edit Subject{% endblock %}
+
+{% block form %}
+<div class="form-floating">
+    <select class="form-control" id="subject">
+    <option disabled>&lt;Select subject to edit&gt;</option>
+    {% for subject in subjects %}
+        <option>{{subject['subjectname']}}</option>
+    {% endfor %}
+    </select>
+    <label for="subject">Subject</label>
+</div>
+<hr class="my-3">
+<div class="form-floating">
+    <input type="text" name="name" class="form-control" id="name" placeholder="name">
+    <label for="name">Name</label>
+</div>
+<div class="form-floating">
+    <input type="date" name="startDate" class="form-control" id="startDate" placeholder="startDate">
+    <label for="startDate">Start Date</label>
+</div>
+<div class="form-floating">
+    <input type="date" name="endDate" class="form-control" id="endDate" placeholder="endDate">
+    <label for="endDate">End Date</label>
+</div>
+<hr class="my-3">
+<button class="w-100 btn btn-lg bg-primary text-white" type="submit">Add Subject</button>
+{% endblock %}
