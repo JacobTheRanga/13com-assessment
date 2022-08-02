@@ -12,8 +12,8 @@
           <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
             {% if session['role'] == 'admin' %}
             <li>
-              <a href="{{url_for('addSubject')}}" class="nav-link text-secondary">
-                Add Subject
+              <a href="{{url_for('subjects')}}" class="nav-link text-secondary">
+                Subjects
               </a>
             </li>
             {% endif %}

@@ -57,36 +57,15 @@ def permission(role):
         return True
     return False
 
-@app.route('/addsubject', methods = ['get', 'post'])
-def addSubject():
-    if permission(session['role']) is False:
-        return redirect(url_for('home'))
-    if request.method != 'POST':
-        return render_template('/addSubject.html')
-    with connection.cursor() as cursor:
-        cursor.execute('insert into subjects (\
-                        subjectname,\
-                        startdate,\
-                        enddate\
-                        )\
-                        values (%s, %s, %s)',
-                        (
-                            request.form['addSubject'],
-                            request.form['startDate'],
-                            request.form['endDate']
-                        ))
-        connection.commit()
-        return redirect(url_for('home'))
-
-@app.route('/editsubject', methods = ['get', 'post'])
-def editSubject():
+@app.route('/subjects', methods = ['get', 'post'])
+def subjects():
     if permission(session['role']) is False:
         return redirect(url_for('home'))
     if request.method != 'POST':
         with connection.cursor() as cursor:
             cursor.execute('select * from subjects')
             subjects = cursor.fetchall()
-        return render_template('/editSubject.html', subjects = subjects)
+        return render_template('/subjects.html', subjects = subjects)
 
 if __name__ == "__main__":
     app.run(host='localhost', port=5555)

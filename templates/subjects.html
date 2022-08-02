@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{% block title %}Subjects{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-auto me-auto order-1 text-center">
+        <p class="display-5 fw-bold">Subjects</p>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Subject</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for subject in subjects %}
+        <tr>
+            <th scope="row">{{subject['subjectid']}}</th>
+            <td>{{subject['subjectname']}}</td>
+            <td>{{subject['startdate']}}</td>
+            <td>{{subject['enddate']}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
