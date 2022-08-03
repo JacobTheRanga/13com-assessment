@@ -23,8 +23,13 @@
         <tr>
             <th scope="row">{{subject['subjectid']}}</th>
             <td>{{subject['subjectname']}}</td>
-            <td>{{subject['startdate']}}</td>
-            <td>{{subject['enddate']}}</td>
+            <td>{{subject['start']}}</td>
+            <td>{{subject['end']}}</td>
+            <td>
+                <i class="btn bi bi-pencil" id="editSubject{{subject['subjectid']}}" onclick="editHover('editSubject{{subject['subjectid']}}')"></i>
+                <i class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onclick="deleteHover('deleteSubject{{subject['subjectid']}}')"></i>
+            </td>
+            <td></td>
         </tr>
         {% endfor %}
     </tbody>

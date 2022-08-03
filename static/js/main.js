@@ -28,3 +28,13 @@ function errorLogin(type) {
     const msg = type === 'email' ? 'There is no user with this email' : 'Password is incorrect';
     errorMessage.innerHTML = msg;
 }
+
+function editHover(str) {
+    eval(str).classList.toggle('bi-pencil')
+    eval(str).classList.toggle('bi-pencil-fill')
+}
+
+function deleteHover() {
+    eval(str).classList.toggle('bi-trash')
+    eval(str).classList.toggle('bi-trash-fill')
+}

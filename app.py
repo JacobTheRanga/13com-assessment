@@ -61,11 +61,10 @@ def permission(role):
 def subjects():
     if permission(session['role']) is False:
         return redirect(url_for('home'))
-    if request.method != 'POST':
-        with connection.cursor() as cursor:
-            cursor.execute('select * from subjects')
-            subjects = cursor.fetchall()
-        return render_template('/subjects.html', subjects = subjects)
+    with connection.cursor() as cursor:
+        cursor.execute('select * from subjects')
+        subjects = cursor.fetchall()
+    return render_template('/subjects.html', subjects = subjects)
 
 if __name__ == "__main__":
     app.run(host='localhost', port=5555)
