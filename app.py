@@ -15,7 +15,6 @@ def create_connection():
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor
     )
-connection = create_connection()
 
 @app.route('/')
 def home():
@@ -27,6 +26,7 @@ def home():
 def login():
     if request.method != 'POST':
         return render_template('/login.html')
+    connection = create_connection()
     with connection.cursor() as cursor:
         cursor.execute('select * from users where \
                         email=%s',
@@ -61,10 +61,24 @@ def permission(role):
 def subjects():
     if permission(session['role']) is False:
         return redirect(url_for('home'))
+    connection = create_connection()
     with connection.cursor() as cursor:
         cursor.execute('select * from subjects')
         subjects = cursor.fetchall()
     return render_template('/subjects.html', subjects = subjects)
+
+@app.route('/deleteSubject', methods = ['get', 'post'])
+def deleteSubject():
+    if permission(session['role']) is False:
+        return redirect(url_for('home'))
+    connection = create_connection()
+    with connection.cursor() as cursor:
+        cursor.execute('delete from usersubjects where subjectid=%s',   
+                        int(request.args.get('id')))
+        cursor.execute('delete from subjects where subjectid=%s',   
+                        int(request.args.get('id')))
+        connection.commit()
+    return redirect(url_for('subjects'))
 
 if __name__ == "__main__":
     app.run(host='localhost', port=5555)

@@ -26,8 +26,8 @@
             <td>{{subject['start']}}</td>
             <td>{{subject['end']}}</td>
             <td>
-                <i class="btn bi bi-pencil" id="editSubject{{subject['subjectid']}}" onclick="editHover('editSubject{{subject['subjectid']}}')"></i>
-                <i class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onclick="deleteHover('deleteSubject{{subject['subjectid']}}')"></i>
+                <i class="btn bi bi-pencil" id="editSubject{{subject['subjectid']}}" onmouseover="editHover('editSubject{{subject['subjectid']}}')" onmouseout="editHover('editSubject{{subject['subjectid']}}')"></i>
+                <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><i class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="deleteHover('deleteSubject{{subject['subjectid']}}')" onmouseout="deleteHover('deleteSubject{{subject['subjectid']}}')"></i></a>
             </td>
             <td></td>
         </tr>

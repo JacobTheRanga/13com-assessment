@@ -34,7 +34,7 @@ function editHover(str) {
     eval(str).classList.toggle('bi-pencil-fill')
 }
 
-function deleteHover() {
+function deleteHover(str) {
     eval(str).classList.toggle('bi-trash')
     eval(str).classList.toggle('bi-trash-fill')
 }
