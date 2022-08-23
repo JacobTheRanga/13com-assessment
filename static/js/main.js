@@ -1,5 +1,5 @@
 function onLoad() {
-    const type = errorMessage.getAttribute('error')
+    const type = errorMessage.getAttribute('error');
     if (type != '') {
         error(type);
     }
@@ -9,7 +9,7 @@ function passwordView() {
     const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
     password.setAttribute('type', type);
     togglePassword.classList.toggle('bi-eye-slash-fill');
-    togglePassword.classList.toggle('bi-eye-fill')
+    togglePassword.classList.toggle('bi-eye-fill');
 }
 
 function error(type) {
@@ -20,21 +20,25 @@ function error(type) {
 
 function errorLogin(type) {
     if (type == 'email') {
-        email.classList.toggle('is-invalid')
+        email.classList.toggle('is-invalid');
     }
     else {
-        password.classList.toggle('is-invalid')
+        password.classList.toggle('is-invalid');
     }
     const msg = type === 'email' ? 'There is no user with this email' : 'Password is incorrect';
     errorMessage.innerHTML = msg;
 }
 
 function editHover(str) {
-    eval(str).classList.toggle('bi-pencil')
-    eval(str).classList.toggle('bi-pencil-fill')
+    eval(str).classList.toggle('bi-pencil');
+    eval(str).classList.toggle('bi-pencil-fill');
 }
 
 function deleteHover(str) {
-    eval(str).classList.toggle('bi-trash')
-    eval(str).classList.toggle('bi-trash-fill')
+    eval(str).classList.toggle('bi-trash');
+    eval(str).classList.toggle('bi-trash-fill');
+}
+function addHover() {
+    addSubject.classList.toggle('bi-plus-circle');
+    addSubject.classList.toggle('bi-plus-circle-fill');
 }
