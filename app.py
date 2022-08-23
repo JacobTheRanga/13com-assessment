@@ -55,11 +55,13 @@ def register():
 def permission(role):
     if role == 'admin':
         return True
-    return False
+    raise
 
 @app.route('/subjects', methods = ['get', 'post'])
 def subjects():
-    if permission(session['role']) is False:
+    try:
+        permission(session['role'])
+    except:
         return redirect(url_for('home'))
     connection = create_connection()
     with connection.cursor() as cursor:
@@ -69,7 +71,9 @@ def subjects():
 
 @app.route('/deleteSubject', methods = ['get', 'post'])
 def deleteSubject():
-    if permission(session['role']) is False:
+    try:
+        permission(session['role'])
+    except:
         return redirect(url_for('home'))
     connection = create_connection()
     with connection.cursor() as cursor:
