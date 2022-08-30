@@ -84,5 +84,10 @@ def deleteSubject():
         connection.commit()
     return redirect(url_for('subjects'))
 
+@app.route('/test', methods = ['get', 'post'])
+def test():
+    print(request.form['name'])
+    return redirect(url_for('subjects'))
+
 if __name__ == "__main__":
     app.run(host='localhost', port=5555)

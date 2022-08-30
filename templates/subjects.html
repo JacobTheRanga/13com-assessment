@@ -32,30 +32,32 @@
             <td></td>
         </tr>
         {% endfor %}
-        <tr>
-            <th scope="row">{{subjects|length+1}}</th>
-            <td>
-                <div class="form-floating">
-                    <input type="text" name="name" class="form-control" id="name" placeholder="Name">
-                    <label for="name">Subject Name</label>
-                </div>
-            </td>
-            <td>
-                <div class="form-floating">
-                    <input type="date" name="startdate" class="form-control" id="startdate" placeholder="StartDate">
-                    <label for="startdate">Start Date</label>
-                </div>
-            </td>
-            <td>
-                <div class="form-floating">
-                    <input type="date" name="enddate" class="form-control" id="enddate" placeholder="EndDate">
-                    <label for="enddate">End Date</label>
-                </div>
-            </td>
-            <td>
-                <i class="btn bi bi-plus-circle" id="addSubject" onmouseover="addHover()" onmouseout="addHover()"></i>
-            </td>
-        </tr>
+        <form method="post" action="{{url_for('test')}}">
+            <tr>
+                <th scope="row">{{subjects|length+1}}</th>
+                <td>
+                    <div class="form-floating">
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Name">
+                        <label for="name">Subject Name</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-floating">
+                        <input type="date" name="startdate" class="form-control" id="startdate" placeholder="StartDate">
+                        <label for="startdate">Start Date</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-floating">
+                        <input type="date" name="enddate" class="form-control" id="enddate" placeholder="EndDate">
+                        <label for="enddate">End Date</label>
+                    </div>
+                </td>
+                <td>
+                    <button class="btn" type="submit"><i type="submit" class="bi bi-plus-circle" id="addSubject" onmouseover="addHover()" onmouseout="addHover()"></i></button>
+                </td>
+            </tr>
+        </form>
     </tbody>
 </table>
 {% endblock %}
