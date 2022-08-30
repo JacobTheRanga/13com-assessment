@@ -102,5 +102,13 @@ def addSubject():
         connection.commit()
     return redirect(url_for('subjects'))
 
+@app.route('/editsubject', methods = ['get', 'post'])
+def editSubject():
+    try:
+        permission(session['role'])
+    except:
+        return redirect(url_for('home'))
+    return redirect(url_for('subjects'))
+
 if __name__ == "__main__":
     app.run(host='localhost', port=5555)

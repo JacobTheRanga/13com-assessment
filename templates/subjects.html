@@ -22,14 +22,15 @@
         {% for subject in subjects %}
         <tr>
             <th scope="row">{{subjects.index(subject)+1}}</th>
-            <td>{{subject['subjectname']}}</td>
-            <td>{{subject['start']}}</td>
-            <td>{{subject['end']}}</td>
-            <td>
-                <i class="btn bi bi-pencil" id="editSubject{{subject['subjectid']}}" onmouseover="editHover('editSubject{{subject['subjectid']}}')" onmouseout="editHover('editSubject{{subject['subjectid']}}')"></i>
-                <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><i class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="deleteHover('deleteSubject{{subject['subjectid']}}')" onmouseout="deleteHover('deleteSubject{{subject['subjectid']}}')"></i></a>
-            </td>
-            <td></td>
+            <form method="post" action="{{url_for('editSubject')}}?id={{subject['subjectid']}}">
+                <td id="subjectName{{subject['subjectid']}}">{{subject['subjectname']}}</td>
+                <td id="subjectStartDate{{subject['subjectid']}}">{{subject['start']}}</td>
+                <td id="subjectEndDate{{subject['subjectid']}}">{{subject['end']}}</td>
+                <td>
+                    <button class="btn" type="submit"><i class="bi bi-pencil" id="editSubject{{subject['subjectid']}}" onmouseover="editHover('editSubject{{subject['subjectid']}}')" onmouseout="editHover('editSubject{{subject['subjectid']}}')"></i></button>
+                    <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><i class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="deleteHover('deleteSubject{{subject['subjectid']}}')" onmouseout="deleteHover('deleteSubject{{subject['subjectid']}}')"></i></a>
+                </td>
+            </form>
         </tr>
         {% endfor %}
         <form method="post" action="{{url_for('addSubject')}}">
@@ -54,7 +55,7 @@
                     </div>
                 </td>
                 <td>
-                    <button class="btn" type="submit"><i type="submit" class="bi bi-plus-circle" id="addSubject" onmouseover="addHover()" onmouseout="addHover()"></i>
+                    <button class="btn" type="submit"><i class="bi bi-plus-circle" id="addSubject" onmouseover="addHover()" onmouseout="addHover()"></i>
                 </td>
             </tr>
         </form>
