@@ -84,9 +84,22 @@ def deleteSubject():
         connection.commit()
     return redirect(url_for('subjects'))
 
-@app.route('/test', methods = ['get', 'post'])
-def test():
-    print(request.form['name'])
+@app.route('/addsubject', methods = ['get', 'post'])
+def addSubject():
+    try:
+        permission(session['role'])
+    except:
+        return redirect(url_for('home'))
+    connection = create_connection()
+    with connection.cursor() as cursor:
+        cursor.execute('insert into subjects (subjectname, start, end)\
+                        values (%s, %s, %s)',
+                        (
+                            request.form['name'],
+                            request.form['startdate'],
+                            request.form['enddate']
+                        ))
+        connection.commit()
     return redirect(url_for('subjects'))
 
 if __name__ == "__main__":

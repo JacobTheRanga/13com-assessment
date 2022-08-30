@@ -32,29 +32,29 @@
             <td></td>
         </tr>
         {% endfor %}
-        <form method="post" action="{{url_for('test')}}">
+        <form method="post" action="{{url_for('addSubject')}}">
             <tr>
                 <th scope="row">{{subjects|length+1}}</th>
                 <td>
                     <div class="form-floating">
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Name">
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Name" required>
                         <label for="name">Subject Name</label>
                     </div>
                 </td>
                 <td>
                     <div class="form-floating">
-                        <input type="date" name="startdate" class="form-control" id="startdate" placeholder="StartDate">
+                        <input type="date" name="startdate" class="form-control" id="startdate" placeholder="StartDate" required>
                         <label for="startdate">Start Date</label>
                     </div>
                 </td>
                 <td>
                     <div class="form-floating">
-                        <input type="date" name="enddate" class="form-control" id="enddate" placeholder="EndDate">
+                        <input type="date" name="enddate" class="form-control" id="enddate" placeholder="EndDate" required>
                         <label for="enddate">End Date</label>
                     </div>
                 </td>
                 <td>
-                    <button class="btn" type="submit"><i type="submit" class="bi bi-plus-circle" id="addSubject" onmouseover="addHover()" onmouseout="addHover()"></i></button>
+                    <button class="btn" type="submit"><i type="submit" class="bi bi-plus-circle" id="addSubject" onmouseover="addHover()" onmouseout="addHover()"></i>
                 </td>
             </tr>
         </form>
