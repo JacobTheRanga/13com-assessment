@@ -42,3 +42,19 @@ function addHover() {
     addSubject.classList.toggle('bi-plus-circle');
     addSubject.classList.toggle('bi-plus-circle-fill');
 }
+function editSubject(id) {
+    if (eval('subjectButtons'+id).getAttribute('edit') == 'False'){
+        eval('subjectButtons'+id).setAttribute('edit', 'True');
+        eval('subjectButtons'+id).innerHTML = `
+        <button class="btn" type="submit"><i class="btn bi bi-pencil" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')" onmouseover="editHover('editSubject{{subject['subjectid']}}')" onmouseout="editHover('editSubject{{subject['subjectid']}}')"></i></button>
+        <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><i class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="deleteHover('deleteSubject{{subject['subjectid']}}')" onmouseout="deleteHover('deleteSubject{{subject['subjectid']}}')"></i></a>
+        `;
+    }
+    else {
+        eval('subjectButtons'+id).setAttribute('edit', 'False');
+        eval('subjectButtons'+id).innerHTML = `
+        <i class="btn bi bi-pencil" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')" onmouseover="editHover('editSubject{{subject['subjectid']}}')" onmouseout="editHover('editSubject{{subject['subjectid']}}')"></i>
+        <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><i class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="deleteHover('deleteSubject{{subject['subjectid']}}')" onmouseout="deleteHover('deleteSubject{{subject['subjectid']}}')"></i></a>
+        `;
+    }
+}

@@ -20,18 +20,19 @@
     </thead>
     <tbody>
         {% for subject in subjects %}
-        <tr>
-            <th scope="row">{{subjects.index(subject)+1}}</th>
-            <form method="post" action="{{url_for('editSubject')}}?id={{subject['subjectid']}}">
-                <td id="subjectName{{subject['subjectid']}}">{{subject['subjectname']}}</td>
-                <td id="subjectStartDate{{subject['subjectid']}}">{{subject['start']}}</td>
-                <td id="subjectEndDate{{subject['subjectid']}}">{{subject['end']}}</td>
-                <td>
-                    <button class="btn" type="submit"><i class="bi bi-pencil" id="editSubject{{subject['subjectid']}}" onmouseover="editHover('editSubject{{subject['subjectid']}}')" onmouseout="editHover('editSubject{{subject['subjectid']}}')"></i></button>
-                    <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><i class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="deleteHover('deleteSubject{{subject['subjectid']}}')" onmouseout="deleteHover('deleteSubject{{subject['subjectid']}}')"></i></a>
-                </td>
-            </form>
-        </tr>
+        <form method="post" action="{{url_for('editSubject')}}?id={{subject['subjectid']}}">
+            <tr>
+                <th scope="row">{{subjects.index(subject)+1}}</th>
+                    <td id="subjectName{{subject['subjectid']}}">{{subject['subjectname']}}</td>
+                    <td id="subjectStartDate{{subject['subjectid']}}">{{subject['start']}}</td>
+                    <td id="subjectEndDate{{subject['subjectid']}}">{{subject['end']}}</td>
+                    <td id="subjectButtons{{subject['subjectid']}}" edit="False">
+                        <i class="btn bi bi-pencil" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')" onmouseover="editHover('editSubject{{subject['subjectid']}}')" onmouseout="editHover('editSubject{{subject['subjectid']}}')"></i>
+                        <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><i class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="deleteHover('deleteSubject{{subject['subjectid']}}')" onmouseout="deleteHover('deleteSubject{{subject['subjectid']}}')"></i></a>
+                    </td>
+                </form>
+            </tr>
+        </form>
         {% endfor %}
         <form method="post" action="{{url_for('addSubject')}}">
             <tr>

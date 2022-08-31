@@ -108,6 +108,20 @@ def editSubject():
         permission(session['role'])
     except:
         return redirect(url_for('home'))
+    connection = create_connection()
+    with connection.cursor() as cursor:
+        cursor.execute('update subjects set\
+                        subjectname = %s,\
+                        start = %s,\
+                        end = %s\
+                        where subjectid = %s',
+                        (
+                            request.form['name'],
+                            request.form['start'],
+                            request.form['end'],
+                            int(request.args.get('id'))
+                        ))
+        connection.commit()
     return redirect(url_for('subjects'))
 
 if __name__ == "__main__":
