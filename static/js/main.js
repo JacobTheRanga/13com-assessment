@@ -46,15 +46,26 @@ function editSubject(id) {
     if (eval('subjectButtons'+id).getAttribute('edit') == 'False'){
         eval('subjectButtons'+id).setAttribute('edit', 'True');
         eval('subjectButtons'+id).innerHTML = `
-        <button class="btn" type="submit"><i class="btn bi bi-pencil" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')" onmouseover="editHover('editSubject{{subject['subjectid']}}')" onmouseout="editHover('editSubject{{subject['subjectid']}}')"></i></button>
-        <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><i class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="deleteHover('deleteSubject{{subject['subjectid']}}')" onmouseout="deleteHover('deleteSubject{{subject['subjectid']}}')"></i></a>
+        <button class="btn" type="submit"><i class="btn bi bi-check-circle submit" id="editSubject`+id+`" onmouseover="submitHover('editSubject`+id+`')" onmouseout="submitHover('editSubject`+id+`')"></i></button>
+        <i class="btn bi bi-x-circle cancel" id="deleteSubject`+id+`" onclick="editSubject(`+id+`)" onmouseover="cancelHover('deleteSubject`+id+`')" onmouseout="cancelHover('deleteSubject`+id+`')"></i>
         `;
     }
     else {
         eval('subjectButtons'+id).setAttribute('edit', 'False');
         eval('subjectButtons'+id).innerHTML = `
-        <i class="btn bi bi-pencil" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')" onmouseover="editHover('editSubject{{subject['subjectid']}}')" onmouseout="editHover('editSubject{{subject['subjectid']}}')"></i>
-        <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><i class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="deleteHover('deleteSubject{{subject['subjectid']}}')" onmouseout="deleteHover('deleteSubject{{subject['subjectid']}}')"></i></a>
+        <i class="btn bi bi-pencil" id="editSubject`+id+`" onclick="editSubject('`+id+`')" onmouseover="editHover('editSubject`+id+`')" onmouseout="editHover('editSubject`+id+`')"></i>
+        <a href="/deleteSubject?id=`+id+`"><i class="btn bi bi-trash" id="deleteSubject`+id+`" onmouseover="deleteHover('deleteSubject`+id+`')" onmouseout="deleteHover('deleteSubject`+id+`')"></i></a>
         `;
     }
+}
+
+function cancelHover(id){
+    eval(id).classList.toggle('bi-x-circle');
+    eval(id).classList.toggle('bi-x-circle-fill');
+
+}
+
+function submitHover(id){
+    eval(id).classList.toggle('bi-check-circle');
+    eval(id).classList.toggle('bi-check-circle-fill');
 }
