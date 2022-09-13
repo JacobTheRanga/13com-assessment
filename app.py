@@ -110,16 +110,17 @@ def editSubject():
         return redirect(url_for('home'))
     connection = create_connection()
     with connection.cursor() as cursor:
+        subject = request.args.get('id')
         cursor.execute('update subjects set\
                         subjectname = %s,\
                         start = %s,\
                         end = %s\
                         where subjectid = %s',
                         (
-                            request.form['name'],
-                            request.form['start'],
-                            request.form['end'],
-                            int(request.args.get('id'))
+                            request.form['subjectNameInput'+subject],
+                            request.form['subjectStartDateInput'+subject],
+                            request.form['subjectEndDateInput'+subject],
+                            subject
                         ))
         connection.commit()
     return redirect(url_for('subjects'))
