@@ -5,6 +5,37 @@ function onLoad() {
     }
 }
 
+function hoverClassToggle(name) {
+    const ids = ['addSubject'];
+    const classToggle = {'plus-circle':'plus-circle-fill'};
+    for (let i = 0; i < ids.length; i++){
+        if (name == ids[i]){
+            eval(name).classList.toggle('bi-'+Object.keys(classToggle)[i]);
+            eval(name).classList.toggle('bi-'+Object.values(classToggle)[i]);
+        }
+    }
+}
+
+function hoverClassToggleMulti(name, id) {
+    const ids = ['editSubject',
+                 'deleteSubject',
+                 'submitSubject',
+                 'cancelSubject'
+                ];
+    const classToggle = {
+        'pencil':'pencil-fill',
+        'trash':'trash-fill',
+        'check-circle':'check-circle-fill',
+        'x-circle':'x-circle-fill'
+    };
+    for (let i = 0; i <ids.length; i++){
+        if (name == ids[i]){
+            eval(name+id).classList.toggle('bi-'+Object.keys(classToggle)[i]);
+            eval(name+id).classList.toggle('bi-'+Object.values(classToggle)[i]);
+        }
+    }
+}
+
 function passwordView() {
     const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
     password.setAttribute('type', type);
@@ -29,57 +60,33 @@ function errorLogin(type) {
     errorMessage.innerHTML = msg;
 }
 
-function editHover(str) {
-    eval(str).classList.toggle('bi-pencil');
-    eval(str).classList.toggle('bi-pencil-fill');
-}
-
-function deleteHover(str) {
-    eval(str).classList.toggle('bi-trash');
-    eval(str).classList.toggle('bi-trash-fill');
-}
-function addHover() {
-    addSubject.classList.toggle('bi-plus-circle');
-    addSubject.classList.toggle('bi-plus-circle-fill');
-}
 function editSubject(id) {
-    const inputs = ['subjectName', 'subjectStartDate', 'subjectEndDate'];
+    const inputs = {'subjectName':'text', 'subjectStartDate':'date', 'subjectEndDate':'date'};
     const display = ['Subject', 'Start Date', 'End Date'];
     let values = [];
     if (eval('subjectButtons'+id).getAttribute('edit') == 'False'){
-        for (let i = 0; i < inputs.length; i++){
-            values[i] = eval(inputs[i]+id).innerHTML;
-            eval(inputs[i]+id).innerHTML = `<div class="form-floating">
-                <input type="text" name="`+inputs[i]+`Input`+id+`" class="form-control" id="`+inputs[i]+`Input`+id+`" placeholder="`+inputs[i]+`Input`+id+`" required value="`+values[i]+`">
-                <label for="`+inputs[i]+`Input`+id+`">`+display[i]+`</label>
-                </div>`;
+        for (let i = 0; i < Object.keys(inputs).length; i++){
+            values[i] = eval(Object.keys(inputs)[i]+id).innerHTML;
+            eval(Object.keys(inputs)[i]+id).innerHTML = `<div class="form-floating">
+                                                            <input type="`+Object.values(inputs)[i]+`" name="`+Object.keys(inputs)[i]+`Input`+id+`" class="form-control" id="`+Object.keys(inputs)[i]+`Input`+id+`" placeholder="`+Object.keys(inputs)[i]+`Input`+id+`" value="`+values[i]+`" required>
+                                                            <label for="`+Object.keys(inputs)[i]+`Input`+id+`">`+display[i]+`</label>
+                                                        </div>`;
         }
         eval('subjectButtons'+id).innerHTML = `
-        <button class="btn" type="submit"><i class="bi bi-check-circle submit" id="editSubject`+id+`" onmouseover="submitHover('editSubject`+id+`')" onmouseout="submitHover('editSubject`+id+`')"></i></button>
-        <i class="btn bi bi-x-circle cancel" id="deleteSubject`+id+`" onclick="editSubject(`+id+`)" onmouseover="cancelHover('deleteSubject`+id+`')" onmouseout="cancelHover('deleteSubject`+id+`')"></i>
+        <button class="btn" type="submit"><i class="bi bi-check-circle submit" id="submitSubject`+id+`" onmouseover="hoverClassToggleMulti('submitSubject', `+id+`)" onmouseout="hoverClassToggleMulti('submitSubject', `+id+`)"></i></button>
+        <i class="btn bi bi-x-circle cancel" id="cancelSubject`+id+`" onclick="editSubject('`+id+`')" onmouseover="hoverClassToggleMulti('cancelSubject', `+id+`)" onmouseout="hoverClassToggleMulti('cancelSubject', `+id+`)"></i>
         `;
         eval('subjectButtons'+id).setAttribute('edit', 'True');
     }
     else {
-        for (let i = 0; i < inputs.length; i++){
-            values[i] = eval(inputs[i]+`Input`+id).getAttribute('value');
-            eval(inputs[i]+id).innerHTML = values[i];
+        for (let i = 0; i < Object.keys(inputs).length; i++){
+            values[i] = eval(Object.keys(inputs)[i]+`Input`+id).getAttribute('value');
+            eval(Object.keys(inputs)[i]+id).innerHTML = values[i];
         }
         eval('subjectButtons'+id).innerHTML = `
-            <i class="btn bi bi-pencil" id="editSubject`+id+`" onclick="editSubject('`+id+`')" onmouseover="editHover('editSubject`+id+`')" onmouseout="editHover('editSubject`+id+`')"></i>
-            <a href="/deleteSubject?id=`+id+`"><i class="btn bi bi-trash" id="deleteSubject`+id+`" onmouseover="deleteHover('deleteSubject`+id+`')" onmouseout="deleteHover('deleteSubject`+id+`')"></i></a>
+            <i class="btn bi bi-pencil" id="editSubject`+id+`" onclick="editSubject('`+id+`')" onmouseover="hoverClassToggleMulti('editSubject', `+id+`)" onmouseout="hoverClassToggleMulti('editSubject', `+id+`)"></i>
+            <a href="/deleteSubject?id=`+id+`"><i class="btn bi bi-trash" id="deleteSubject`+id+`" onmouseover="hoverClassToggleMulti('deleteSubject', `+id+`)" onmouseout="hoverClassToggleMulti('deleteSubject', `+id+`)"></i></a>
             `;
         eval('subjectButtons'+id).setAttribute('edit', 'False');
     }
-}
-
-function cancelHover(id){
-    eval(id).classList.toggle('bi-x-circle');
-    eval(id).classList.toggle('bi-x-circle-fill');
-
-}
-
-function submitHover(id){
-    eval(id).classList.toggle('bi-check-circle');
-    eval(id).classList.toggle('bi-check-circle-fill');
 }
