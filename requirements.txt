@@ -2,3 +2,4 @@ flask
 pymysql
 passlib
 python-dotenv
+cryptography

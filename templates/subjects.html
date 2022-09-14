@@ -27,8 +27,8 @@
                 <td id="subjectStartDate{{subject['subjectid']}}">{{subject['start']}}</td>
                 <td id="subjectEndDate{{subject['subjectid']}}">{{subject['end']}}</td>
                 <td id="subjectButtons{{subject['subjectid']}}" edit="False">
-                    <i class="btn bi bi-pencil" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')" onmouseover="editHover('editSubject{{subject['subjectid']}}')" onmouseout="editHover('editSubject{{subject['subjectid']}}')"></i>
-                    <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><i class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="deleteHover('deleteSubject{{subject['subjectid']}}')" onmouseout="deleteHover('deleteSubject{{subject['subjectid']}}')"></i></a>
+                    <i class="btn bi bi-pencil" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')" onmouseover="hoverClassToggleMulti('editSubject', {{subject['subjectid']}})" onmouseout="hoverClassToggleMulti('editSubject', {{subject['subjectid']}})"></i>
+                    <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><i class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="hoverClassToggleMulti('deleteSubject', {{subject['subjectid']}})" onmouseout="hoverClassToggleMulti('deleteSubject', {{subject['subjectid']}})"></i></a>
                 </td>
             </tr>
         </form>
@@ -55,7 +55,7 @@
                     </div>
                 </td>
                 <td>
-                    <button class="btn" type="submit"><i class="bi bi-plus-circle" id="addSubject" onmouseover="addHover()" onmouseout="addHover()"></i>
+                    <button class="btn" type="submit"><i class="bi bi-plus-circle" id="addSubject" onmouseover="hoverClassToggle('addSubject')" onmouseout="hoverClassToggle('addSubject')"></i></button>
                 </td>
             </tr>
         </form>
