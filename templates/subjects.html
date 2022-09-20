@@ -18,20 +18,18 @@
             <th scope="col"></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="tbody">
         {% for subject in subjects %}
-        <form id="form{{subject['subjectid']}}" action="{{url_for('editSubject')}}?id={{subject['subjectname']}}" method="post">
-            <tr>
-                <th scope="row">{{subjects.index(subject)+1}}</th>
-                <td id="subjectName{{subject['subjectid']}}">{{subject['subjectname']}}</td>
-                <td id="subjectStartDate{{subject['subjectid']}}">{{subject['start']}}</td>
-                <td id="subjectEndDate{{subject['subjectid']}}">{{subject['end']}}</td>
-                <td id="subjectButtons{{subject['subjectid']}}" edit="False">
-                    <img src="{{url_for('static', filename='img/pencil.svg')}}" height="50" width="50" class="btn" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')" onmouseover="hoverClassToggleMulti('editSubject', {{subject['subjectid']}})" onmouseout="hoverClassToggleMulti('editSubject', {{subject['subjectid']}})">
-                    <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/trash.svg')}}" height="50" width="50" class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="hoverClassToggleMulti('deleteSubject', {{subject['subjectid']}})" onmouseout="hoverClassToggleMulti('deleteSubject', {{subject['subjectid']}})"></a>
-                </td>
-            </tr>
-        </form>
+        <tr id="row{{subject['subjectid']}}">
+            <th scope="row">{{subjects.index(subject)+1}}</th>
+            <td id="subjectName{{subject['subjectid']}}">{{subject['subjectname']}}</td>
+            <td id="subjectStartDate{{subject['subjectid']}}">{{subject['start']}}</td>
+            <td id="subjectEndDate{{subject['subjectid']}}">{{subject['end']}}</td>
+            <td id="subjectButtons{{subject['subjectid']}}" edit="False">
+                <img src="{{url_for('static', filename='img/pencil.svg')}}" height="50" width="50" class="btn" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')" onmouseover="hoverClassToggleMulti('editSubject', {{subject['subjectid']}})" onmouseout="hoverClassToggleMulti('editSubject', {{subject['subjectid']}})">
+                <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/trash.svg')}}" height="50" width="50" class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="hoverClassToggleMulti('deleteSubject', {{subject['subjectid']}})" onmouseout="hoverClassToggleMulti('deleteSubject', {{subject['subjectid']}})"></a>
+            </td>
+        </tr>
         {% endfor %}
         <form method="post" action="{{url_for('addSubject')}}" id="formAddSubject">
             <tr>

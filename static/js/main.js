@@ -65,22 +65,25 @@ function errorLogin(type) {
 }
 
 function editSubject(id) {
-    const inputs = {'subjectName':'text', 'subjectStartDate':'date', 'subjectEndDate':'date'};
-    const display = ['Subject', 'Start Date', 'End Date'];
+    const inputs = {'subjectName':'text',
+                    'subjectStartDate':'date',
+                    'subjectEndDate':'date'};
+    const display = ['Subject',
+                    'Start Date',
+                    'End Date'];
     let values = [];
     const form = document.createElement('form');
     form.method = 'post';
     form.action = '/editsubject?id='+id;
     tbody.appendChild(form);
-    form.appendChild(eval('row'+id));
     if (eval('subjectButtons'+id).getAttribute('edit') == 'False'){
         for (let i = 0; i < Object.keys(inputs).length; i++){
             values[i] = eval(Object.keys(inputs)[i]+id).innerHTML;
             eval(Object.keys(inputs)[i]+id).innerHTML = '';
-            inputdiv = document.createElement('div');
+            let inputdiv = document.createElement('div');
             inputdiv.classList = 'form-floating';
             eval(Object.keys(inputs)[i]+id).appendChild(inputdiv);
-            input = document.createElement('input');
+            let input = document.createElement('input');
             input.type = Object.values(inputs)[i];
             input.name = Object.keys(inputs)[i]+`Input`+id;
             input.id = Object.keys(inputs)[i]+`Input`+id;
@@ -88,10 +91,11 @@ function editSubject(id) {
             input.placeholder = Object.keys(inputs)[i]+`Input`+id;
             input.value = values[i]
             inputdiv.appendChild(input);
-            label = document.createElement('label');
+            let label = document.createElement('label');
             label.for = Object.keys(inputs)[i]+`Input`+id;
             label.innerHTML = display[i];
-            inputdiv.appendChild(lable);
+            inputdiv.appendChild(label);
+            form.appendChild(eval('row'+id));
             // eval(Object.keys(inputs)[i]+id).innerHTML = `<div class="form-floating">
             //                                                 <input type="`+Object.values(inputs)[i]+`" name="`+Object.keys(inputs)[i]+`Input`+id+`" class="form-control" id="`+Object.keys(inputs)[i]+`Input`+id+`" placeholder="`+Object.keys(inputs)[i]+`Input`+id+`" value="`+values[i]+`" required>
             //                                                 <label for="`+Object.keys(inputs)[i]+`Input`+id+`">`+display[i]+`</label>
