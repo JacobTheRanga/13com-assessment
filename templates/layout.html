@@ -10,13 +10,17 @@
           </a>
 
           <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
-            {% if session['role'] == 'admin' %}
             <li>
+            {% if session['role'] == 'admin' %}
               <a href="{{url_for('subjects')}}" class="nav-link text-secondary">
                 Subjects
               </a>
-            </li>
+            {% else %}
+              <a href="{{url_for('selectsubject')}}" class="nav-link text-secondary">
+                Select Subjects
+              </a>
             {% endif %}
+            </li>
             <div class="dropdown text-end">
               <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                 {{session['user']}}
