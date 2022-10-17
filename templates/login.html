@@ -12,7 +12,9 @@
         <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
         <label for="password">Password</label>
     </div>
-    <div for="password" class="border d-flex align-items-center justify-content-center col-2"><i class="btn bi bi-eye-slash-fill" id="togglePassword" onclick="passwordView()"></i></div>
+    <div for="password" class="border d-flex align-items-center justify-content-center col-2">
+        <img src="{{url_for('static', filename='img/eye-slash-fill.svg')}}" class="btn" id="togglePassword" onclick="passwordView()">
+    </div>
 </div>
 
 <div class="checkbox mb-3">

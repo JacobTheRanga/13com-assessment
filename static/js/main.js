@@ -6,8 +6,13 @@ function onLoad() {
 }
 
 function hoverClassToggle(name) {
-    const ids = ['addSubject'];
-    const classToggle = {'plus-circle':'plus-circle-fill'};
+    const ids = ['addSubject',
+                 'togglePassword'
+                ];
+    const classToggle = {
+        'plus-circle':'plus-circle-fill',
+        'eye-slash-fill':'eye-fill'
+    };
     for (let i = 0; i < ids.length; i++){
         if (name == ids[i]){
             val = eval(name).getAttribute('src') === 'static/img/'+Object.values(classToggle)[i]+'.svg' ?
@@ -43,8 +48,7 @@ function hoverClassToggleMulti(name, id) {
 function passwordView() {
     const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
     password.setAttribute('type', type);
-    togglePassword.classList.toggle('bi-eye-slash-fill');
-    togglePassword.classList.toggle('bi-eye-fill');
+    hoverClassToggle('togglePassword');
 }
 
 function error(type) {
