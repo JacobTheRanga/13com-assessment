@@ -24,33 +24,46 @@ function hoverClassToggle(name) {
 }
 
 function hoverClassToggleMulti(name, id) {
-    const ids = ['editSubject',
+    const ids = ['selectSubject',
+                 'editSubject',
                  'deleteSubject',
                  'submitSubject',
                  'cancelSubject',
-                 'selectSubject'
                 ];
     const classToggle = {
+        3:3,
         'pencil':'pencil-fill',
         'trash':'trash-fill',
         'check-circle':'check-circle-fill',
         'x-circle':'x-circle-fill',
-        'check-circle':'check-circle-fill'
     };
     for (let i = 0; i <ids.length; i++){
         if (name == ids[i]){
-            val = eval(name+id).getAttribute('src') === 'static/img/'+Object.values(classToggle)[i]+'.svg' ?
-            'static/img/'+Object.keys(classToggle)[i]+'.svg' :
-            'static/img/'+Object.values(classToggle)[i]+'.svg';
+            if (typeof Object.values(classToggle)[i] === 'string'){
+                val = eval(name+id).getAttribute('src') === 'static/img/'+Object.values(classToggle)[i]+'.svg' ?
+                'static/img/'+Object.keys(classToggle)[i]+'.svg' :
+                'static/img/'+Object.values(classToggle)[i]+'.svg';
+            }
+            else{
+                val = eval(name+id).getAttribute('src') === 'static/img/'+Object.values(classToggle)[Object.values(classToggle)[i]]+'.svg' ?
+                'static/img/'+Object.keys(classToggle)[Object.values(classToggle)[i]]+'.svg' :
+                'static/img/'+Object.values(classToggle)[Object.values(classToggle)[i]]+'.svg';
+            }
             eval(name+id).setAttribute('src', val);
         }
     }
 }
 
 function selectSubject(id) {
-    let current = eval(selectedSubmit.getAttribute('selected'));
-    current.push(id)
-    selectedSubmit.setAttribute('selected') = current;
+    let current = selectedSubmit.getAttribute('selected');
+    if (current == ""){
+        current = id;
+    }
+    else{
+        current = current + '-' + id;
+    }
+    eval('selectedText'+id).innerHTML = 'Selected';
+    selectedSubmit.setAttribute('selected', current);
 }
 
 function passwordView() {

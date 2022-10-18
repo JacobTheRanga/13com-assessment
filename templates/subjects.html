@@ -30,7 +30,8 @@
                 <img src="{{url_for('static', filename='img/pencil.svg')}}" height="50" width="50" class="btn" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')" onmouseover="hoverClassToggleMulti('editSubject', {{subject['subjectid']}})" onmouseout="hoverClassToggleMulti('editSubject', {{subject['subjectid']}})">
                 <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/trash.svg')}}" height="50" width="50" class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="hoverClassToggleMulti('deleteSubject', {{subject['subjectid']}})" onmouseout="hoverClassToggleMulti('deleteSubject', {{subject['subjectid']}})"></a>
                 {% else %}
-                <img src="{{url_for('static', filename='img/check-circle.svg')}}" height="50" class="btn" id="selectSubject{{subject['subjectid']}}" onclick="selectSubject('{{subject['subjectid']}}')" onmouseover="hoverClassToggleMulti('selectSubject', {{subject['subjectid']}})" onmouseout="hoverClassToggleMulti('selectSubject', {{subject['subjectid']}})">>
+                <img src="{{url_for('static', filename='img/check-circle.svg')}}" height="50" class="btn" id="selectSubject{{subject['subjectid']}}" onclick="selectSubject('{{subject['subjectid']}}')" onmouseover="hoverClassToggleMulti('selectSubject', {{subject['subjectid']}})" onmouseout="hoverClassToggleMulti('selectSubject', {{subject['subjectid']}})">
+                <p class="text-success" id="selectedText{{subject['subjectid']}}"></p>
                 {% endif %}
             </td>
         </tr>
@@ -64,7 +65,9 @@
         </form>
         {% else %}
         <tr>
-            <a href="{{url_for('selectSubject')}}" selected="[]" id="selectedSubmit" class="btn">submit :)</a>
+            <th scope="row">
+                <button selected="" id="selectedSubmit" class="btn">submit :)</button>
+            </th>
         </tr>
         {% endif %}
     </tbody>
