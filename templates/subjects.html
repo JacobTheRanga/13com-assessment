@@ -26,11 +26,16 @@
             <td id="subjectStartDate{{subject['subjectid']}}">{{subject['start']}}</td>
             <td id="subjectEndDate{{subject['subjectid']}}">{{subject['end']}}</td>
             <td id="subjectButtons{{subject['subjectid']}}" edit="False">
+                {% if session['role'] == 'admin' %}
                 <img src="{{url_for('static', filename='img/pencil.svg')}}" height="50" width="50" class="btn" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')" onmouseover="hoverClassToggleMulti('editSubject', {{subject['subjectid']}})" onmouseout="hoverClassToggleMulti('editSubject', {{subject['subjectid']}})">
                 <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/trash.svg')}}" height="50" width="50" class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="hoverClassToggleMulti('deleteSubject', {{subject['subjectid']}})" onmouseout="hoverClassToggleMulti('deleteSubject', {{subject['subjectid']}})"></a>
+                {% else %}
+                <img src="{{url_for('static', filename='img/check-circle.svg')}}" height="50" class="btn" id="selectSubject{{subject['subjectid']}}" onclick="selectSubject('{{subject['subjectid']}}')" onmouseover="hoverClassToggleMulti('selectSubject', {{subject['subjectid']}})" onmouseout="hoverClassToggleMulti('selectSubject', {{subject['subjectid']}})">>
+                {% endif %}
             </td>
         </tr>
         {% endfor %}
+        {% if session['role'] == 'admin' %}
         <form method="post" action="{{url_for('addSubject')}}" id="formAddSubject">
             <tr>
                 <th scope="row">{{subjects|length+1}}</th>
@@ -57,6 +62,11 @@
                 </td>
             </tr>
         </form>
+        {% else %}
+        <tr>
+            <a href="{{url_for('selectSubject')}}" selected="[]" id="selectedSubmit" class="btn">submit :)</a>
+        </tr>
+        {% endif %}
     </tbody>
 </table>
 {% endblock %}

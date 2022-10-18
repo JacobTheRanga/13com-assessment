@@ -27,13 +27,15 @@ function hoverClassToggleMulti(name, id) {
     const ids = ['editSubject',
                  'deleteSubject',
                  'submitSubject',
-                 'cancelSubject'
+                 'cancelSubject',
+                 'selectSubject'
                 ];
     const classToggle = {
         'pencil':'pencil-fill',
         'trash':'trash-fill',
         'check-circle':'check-circle-fill',
-        'x-circle':'x-circle-fill'
+        'x-circle':'x-circle-fill',
+        'check-circle':'check-circle-fill'
     };
     for (let i = 0; i <ids.length; i++){
         if (name == ids[i]){
@@ -43,6 +45,12 @@ function hoverClassToggleMulti(name, id) {
             eval(name+id).setAttribute('src', val);
         }
     }
+}
+
+function selectSubject(id) {
+    let current = eval(selectedSubmit.getAttribute('selected'));
+    current.push(id)
+    selectedSubmit.setAttribute('selected') = current;
 }
 
 function passwordView() {

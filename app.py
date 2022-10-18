@@ -57,12 +57,12 @@ def permission(role):
         return True
     raise
 
+@app.route('/selectsubjects')
+def selectSubject():
+    return render_template('home.html')
+
 @app.route('/subjects', methods = ['get', 'post'])
 def subjects():
-    try:
-        permission(session['role'])
-    except:
-        return redirect(url_for('home'))
     connection = create_connection()
     with connection.cursor() as cursor:
         cursor.execute('select * from subjects')
