@@ -57,12 +57,24 @@ def permission(role):
         return True
     raise
 
-@app.route('/selectsubjects')
+@app.route('/selectsubjects', methods = ['get', 'post'])
 def selectSubject():
-    return render_template('home.html')
+    subjects = request.args.get('id').split('-')
+    connection = create_connection()
+    with connection.cursor() as cursor:
+        for subject in subjects:
+            cursor.execute('insert into usersubjects\
+                            (userid, subjectid)\
+                            values (%s, %s)',
+                            (session['id'], subject)
+            )
+        connection.commit()
+    return redirect(url_for('subjects'))
 
 @app.route('/subjects', methods = ['get', 'post'])
 def subjects():
+    if not session:
+        return redirect(url_for('login'))
     connection = create_connection()
     with connection.cursor() as cursor:
         cursor.execute('select * from subjects')
