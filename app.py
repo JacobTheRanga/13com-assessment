@@ -62,6 +62,9 @@ def selectSubject():
     subjects = request.args.get('id').split('-')
     connection = create_connection()
     with connection.cursor() as cursor:
+        cursor.execute('delete from usersubjects\
+                            where userid=%s',
+                            session['id'])
         for subject in subjects:
             cursor.execute('insert into usersubjects\
                             (userid, subjectid)\
@@ -79,7 +82,17 @@ def subjects():
     with connection.cursor() as cursor:
         cursor.execute('select * from subjects')
         subjects = cursor.fetchall()
-    return render_template('/subjects.html', subjects = subjects)
+        try:
+            permission(session['role'])
+        except:
+            cursor.execute('select subjectid from usersubjects\
+                            where userid=%s',
+                            session['id'])
+            subjectselected = []
+            for i in cursor.fetchall():
+                subjectselected.append(i['subjectid'])
+            print(subjectselected)
+    return render_template('/subjects.html', subjects = subjects, subjectselected = subjectselected)
 
 @app.route('/deleteSubject', methods = ['get', 'post'])
 def deleteSubject():
