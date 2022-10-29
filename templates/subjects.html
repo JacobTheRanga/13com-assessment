@@ -20,12 +20,12 @@
     </thead>
     <tbody id="tbody">
         {% for subject in subjects %}
-        <tr id="row{{subject['subjectid']}}">
+        <tr>
             <th scope="row">{{subjects.index(subject)+1}}</th>
-            <td id="subjectName{{subject['subjectid']}}">{{subject['subjectname']}}</td>
-            <td id="subjectStartDate{{subject['subjectid']}}">{{subject['start']}}</td>
-            <td id="subjectEndDate{{subject['subjectid']}}">{{subject['end']}}</td>
-            <td id="subjectButtons{{subject['subjectid']}}" edit="False">
+            <td>{{subject['subjectname']}}</td>
+            <td>{{subject['start']}}</td>
+            <td>{{subject['end']}}</td>
+            <td>
                 {% if session['role'] == 'admin' %}
                 <img src="{{url_for('static', filename='img/pencil.svg')}}" height="50" width="50" class="btn" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')" onmouseover="iconToggle('editSubject{{subject['subjectid']}}', 'edit')" onmouseout="iconToggle('editSubject{{subject['subjectid']}}', 'edit')">
                 <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/trash.svg')}}" height="50" width="50" class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="iconToggle('deleteSubject{{subject['subjectid']}}', 'delete')" onmouseout="iconToggle('deleteSubject{{subject['subjectid']}}', 'delete')"></a>

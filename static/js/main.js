@@ -1,6 +1,6 @@
 function onLoad() {
-    const error = errorMessage.getAttribute('error');
-    error(error);
+    const errmsg = errorMessage.getAttribute('error');
+    error(errmsg);
 }
 
 function iconToggle(id, toggle) {

@@ -76,6 +76,7 @@ def selectSubject():
 
 @app.route('/subjects', methods = ['get', 'post'])
 def subjects():
+    subjectselected = []
     if not session:
         return redirect(url_for('login'))
     connection = create_connection()
@@ -88,7 +89,6 @@ def subjects():
             cursor.execute('select subjectid from usersubjects\
                             where userid=%s',
                             session['id'])
-            subjectselected = []
             for i in cursor.fetchall():
                 subjectselected.append(i['subjectid'])
             print(subjectselected)
