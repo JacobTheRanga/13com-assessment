@@ -27,10 +27,10 @@
             <td>{{subject['end']}}</td>
             <td>
                 {% if session['role'] == 'admin' %}
-                <img src="{{url_for('static', filename='img/pencil.svg')}}" height="50" width="50" class="btn" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')" onmouseover="iconToggle('editSubject{{subject['subjectid']}}', 'edit')" onmouseout="iconToggle('editSubject{{subject['subjectid']}}', 'edit')">
-                <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/trash.svg')}}" height="50" width="50" class="btn bi bi-trash" id="deleteSubject{{subject['subjectid']}}" onmouseover="iconToggle('deleteSubject{{subject['subjectid']}}', 'delete')" onmouseout="iconToggle('deleteSubject{{subject['subjectid']}}', 'delete')"></a>
+                <img src="{{url_for('static', filename='img/pencil.svg')}}" height="50" width="50" class="btn edit" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')">
+                <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/trash.svg')}}" height="50" width="50" class="btn delete"></a>
                 {% else %}
-                <img src="{{url_for('static', filename='img/check-circle.svg')}}" height="50" class="btn" id="selectSubject{{subject['subjectid']}}" onclick="selectSubject('{{subject['subjectid']}}')" onmouseover="iconToggle('selectSubject{{subject['subjectid']}}', 'submit')" onmouseout="iconToggle('selectSubject{{subject['subjectid']}}', 'submit')">
+                <img src="{{url_for('static', filename='img/check-circle.svg')}}" height="50" class="btn submit" id="selectSubject{{subject['subjectid']}}" onclick="selectSubject('{{subject['subjectid']}}')">
                 <p class="text-success" id="selectedText{{subject['subjectid']}}"></p>
                 {% endif %}
             </td>
@@ -59,7 +59,7 @@
                     </div>
                 </td>
                 <td>
-                    <button type="submit" class="btn"><img src="{{url_for('static', filename='img/plus-circle.svg')}}" height="50" width="50" id="addSubject" onmouseover="iconToggle('addSubject', 'add')" onmouseout="iconToggle('addSubject')"></button>
+                    <button type="submit" class="btn add"><img src="{{url_for('static', filename='img/plus-circle.svg')}}" height="50" width="50" id="addSubject"></button>
                 </td>
             </tr>
         </form>
@@ -72,4 +72,5 @@
         {% endif %}
     </tbody>
 </table>
+<p id="errorMessage" error=""></p>
 {% endblock %}

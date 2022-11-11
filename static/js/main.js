@@ -1,30 +1,13 @@
-function onLoad() {
-    const errmsg = errorMessage.getAttribute('error');
-    error(errmsg);
-}
+if(errorMessage.getAttribute('error')) error(errorMessage.getAttribute('error'));
 
-function iconToggle(id, toggle) {
-    const names = ['edit',
-                 'delete',
-                 'submit',
-                 'cancel',
-                 'add',
-                 'view'
-                ];
-    const icons = {
-        'pencil':'pencil-fill',
-        'trash':'trash-fill',
-        'check-circle':'check-circle-fill',
-        'x-circle':'x-circle-fill',
-        'plus-circle':'plus-circle-fill',
-        'eye-slash-fill':'eye-fill'
-    };
+
+function iconToggle(event) {
     for (let i = 0; i <names.length; i++){
-        if (toggle == names[i]){
-            val = eval(id).getAttribute('src') === 'static/img/'+Object.values(icons)[i]+'.svg' ?
+        if (event.currentTarget.classList.contains(names[i])){
+            val = event.currentTarget.getAttribute('src') === 'static/img/'+Object.values(icons)[i]+'.svg' ?
             'static/img/'+Object.keys(icons)[i]+'.svg' :
             'static/img/'+Object.values(icons)[i]+'.svg';
-            eval(id).setAttribute('src', val);
+            event.currentTarget.setAttribute('src', val);
         }
     }
 }
@@ -67,3 +50,26 @@ function errorLogin(error) {
     eval(error).classList.toggle('is-invalid');
     errorMessage.innerHTML = error === 'email' ? 'There is no user with this email' : 'Password is incorrect';
 }
+
+const names = ['edit',
+                 'delete',
+                 'submit',
+                 'cancel',
+                 'add',
+                 'view'
+                ];
+const icons = {
+    'pencil':'pencil-fill',
+    'trash':'trash-fill',
+    'check-circle':'check-circle-fill',
+    'x-circle':'x-circle-fill',
+    'plus-circle':'plus-circle-fill',
+    'eye-slash-fill':'eye-fill'
+};
+
+let imgList = document.querySelectorAll('.'+names.join(',.'))
+
+imgList.forEach(img => {
+    img.addEventListener('mouseover', iconToggle);
+    img.addEventListener('mouseout', iconToggle);
+});
