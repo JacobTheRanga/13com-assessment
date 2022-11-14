@@ -59,9 +59,21 @@ def permission(role):
 
 @app.route('/selectsubjects', methods = ['get', 'post'])
 def selectSubject():
+    if not session:
+        return redirect(url_for('login'))
     subjects = request.args.get('id').split('-')
+    if len(subjects) != 5:
+        print("invalid number selected")
+        return redirect(url_for('subjects'))
     connection = create_connection()
     with connection.cursor() as cursor:
+        for subject in subjects:
+            cursor.execute('select * from subjects\
+                            where subjectid=%s',
+                            subject)
+            if cursor.fetchall() == ():
+                print('invalid subject')
+                return redirect(url_for('subjects'))
         cursor.execute('delete from usersubjects\
                             where userid=%s',
                             session['id'])
@@ -91,7 +103,6 @@ def subjects():
                             session['id'])
             for i in cursor.fetchall():
                 subjectselected.append(i['subjectid'])
-            print(subjectselected)
     return render_template('/subjects.html', subjects = subjects, subjectselected = subjectselected)
 
 @app.route('/deleteSubject', methods = ['get', 'post'])

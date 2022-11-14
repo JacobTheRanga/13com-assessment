@@ -29,8 +29,10 @@ function selectSubject(id) {
         iconToggle(('selectSubject'+id), 'submit');
         for (let i = 0; i < buttons.length; i++){
             eval(buttons[i].id).classList.remove('btn');
-            eval(buttons[i].id).setAttribute('onmouseover', '');
-            eval(buttons[i].id).setAttribute('onmouseout', '');
+            eval(buttons[i].id).removeEventListener('mouseover');
+            eval(buttons[i].id).removeEventListener('mouseout');
+            selectedSubmit.removeAttribute('href');
+            selectedSubmit.classList.toggle('btn')
         }
     }
 }
