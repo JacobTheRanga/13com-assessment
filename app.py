@@ -63,7 +63,6 @@ def selectSubject():
         return redirect(url_for('login'))
     subjects = request.args.get('id').split('-')
     if len(subjects) != 5:
-        print("invalid number selected")
         return redirect(url_for('subjects'))
     connection = create_connection()
     with connection.cursor() as cursor:
@@ -72,7 +71,6 @@ def selectSubject():
                             where subjectid=%s',
                             subject)
             if cursor.fetchall() == ():
-                print('invalid subject')
                 return redirect(url_for('subjects'))
         cursor.execute('delete from usersubjects\
                             where userid=%s',

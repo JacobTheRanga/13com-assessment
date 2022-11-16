@@ -1,58 +1,3 @@
-if(errorMessage.getAttribute('error')) error(errorMessage.getAttribute('error'));
-
-
-function iconToggle(event) {
-    for (let i = 0; i <names.length; i++){
-        if (event.currentTarget.classList.contains(names[i])){
-            val = event.currentTarget.getAttribute('src') === 'static/img/'+Object.values(icons)[i]+'.svg' ?
-            'static/img/'+Object.keys(icons)[i]+'.svg' :
-            'static/img/'+Object.values(icons)[i]+'.svg';
-            event.currentTarget.setAttribute('src', val);
-        }
-    }
-}
-
-function selectSubject(id) {
-    let href = selectedSubmit.getAttribute('href');
-    ids = href.split('=')[1];
-    if (ids.split('-').length == 5) return;
-    for (let i = 0; i < ids.length; i++){
-        if (id == ids[i]) return;
-    }
-    if (ids == "") ids = id;
-    else ids = ids + '-' + id;
-    href = href.split('=')[0] + '=' + ids;
-    eval('selectedText'+id).innerHTML = 'Selected';
-    selectedSubmit.setAttribute('href', href);
-    if (ids.split('-').length ==  5){
-        buttons = document.querySelectorAll('[id^="selectSubject"]');
-        iconToggle(('selectSubject'+id), 'submit');
-        for (let i = 0; i < buttons.length; i++){
-            eval(buttons[i].id).classList.remove('btn');
-            eval(buttons[i].id).removeEventListener('mouseover');
-            eval(buttons[i].id).removeEventListener('mouseout');
-            selectedSubmit.removeAttribute('href');
-            selectedSubmit.classList.toggle('btn')
-        }
-    }
-}
-
-function passwordView() {
-    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-    password.setAttribute('type', type);
-    iconToggle('togglePassword', 'view');
-}
-
-function error(error) {
-    if (error == '') return;
-    if (document.URL.includes('login')) errorLogin(error);
-}
-
-function errorLogin(error) {
-    eval(error).classList.toggle('is-invalid');
-    errorMessage.innerHTML = error === 'email' ? 'There is no user with this email' : 'Password is incorrect';
-}
-
 const names = ['edit',
                  'delete',
                  'submit',
@@ -69,9 +14,73 @@ const icons = {
     'eye-slash-fill':'eye-fill'
 };
 
-let imgList = document.querySelectorAll('.'+names.join(',.'))
+var iconList = document.querySelectorAll('.'+names.join(',.'))
 
-imgList.forEach(img => {
-    img.addEventListener('mouseover', iconToggle);
-    img.addEventListener('mouseout', iconToggle);
+iconList.forEach(icon => {
+    icon.addEventListener('mouseover', iconToggle);
+    icon.addEventListener('mouseout', iconToggle);
 });
+
+if (errorMessage.getAttribute('error')) error(errorMessage.getAttribute('error'));
+
+if (document.URL.includes('subjects')) subjectSelectionLoad();
+
+function selectedSubjects() {
+    let subjects = sessionStorage.getItem('selectedSubjects');
+    if (!subjects) return null;
+    return subjects.split('-');
+}
+
+function iconToggle(event) {
+    let target = event.currentTarget;
+    target.classList.forEach(name => {
+        if (!names.includes(name)) return;
+        let src = 'static/img/%s.svg';
+        let value = src.replace('%s', Object.values(icons)[names.indexOf(name)]);
+        let key = src.replace('%s', Object.keys(icons)[names.indexOf(name)]);
+        let val = target.getAttribute('src') == value ? key : value;
+        target.setAttribute('src', val);
+    });
+}
+
+function selectSubject(id) {
+    let selected = sessionStorage.getItem('selectedSubjects');
+    if (!selected) return sessionStorage.setItem('selectedSubjects', id);
+    let list = selected.split('-');
+    if (list.includes(id)) return;
+    if (list.length == 5) return;
+    sessionStorage.setItem('selectedSubjects', selected + '-' + id);
+    if (list.length == 4) return subjectSelectionLoad();
+}
+
+function subjectSelectionLoad(){
+    if (!selectedSubjects() || selectedSubjects().length != 5) {
+        selectedSubmit.disabled = true;
+        selectedSubmit.removeAttribute('onclick')
+        document.querySelectorAll('.submit').forEach(button => {
+            button.style.backgroundColor = 'black';
+        });
+        return
+    }
+    selectedSubmit.disabled = false;
+    selectedSubmit.setAttribute('onclick', `location.href = './selectsubjects?id=${sessionStorage.getItem('selectedSubjects')}'`);
+    document.querySelectorAll('.submit').forEach(button => {
+        button.style.backgroundColor = 'gray';
+    })
+}
+
+function passwordView() {
+    const type = password.getAttribute('type') == 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    iconToggle('togglePassword', 'view');
+}
+
+function error(error) {
+    if (error == '') return;
+    if (document.URL.includes('login')) errorLogin(error);
+}
+
+function errorLogin(error) {
+    eval(error).classList.toggle('is-invalid');
+    errorMessage.innerHTML = error == 'email' ? 'There is no user with this email' : 'Password is incorrect';
+}
