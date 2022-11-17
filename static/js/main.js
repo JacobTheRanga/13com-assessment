@@ -58,14 +58,18 @@ function subjectSelectionLoad(){
         selectedSubmit.disabled = true;
         selectedSubmit.removeAttribute('onclick')
         document.querySelectorAll('.submit').forEach(button => {
-            button.style.backgroundColor = 'black';
+            button.style.opacity = 1;
+            button.addEventListener('mouseover', iconToggle);
+            button.addEventListener('mouseout', iconToggle);
         });
         return
     }
     selectedSubmit.disabled = false;
     selectedSubmit.setAttribute('onclick', `location.href = './selectsubjects?id=${sessionStorage.getItem('selectedSubjects')}'`);
     document.querySelectorAll('.submit').forEach(button => {
-        button.style.backgroundColor = 'gray';
+        button.style.opacity = 0.5;
+        button.removeEventListener('mouseover', iconToggle);
+        button.removeEventListener('mouseout', iconToggle);
     })
 }
 
