@@ -100,7 +100,8 @@ def subjects():
                             where userid=%s',
                             session['id'])
             for i in cursor.fetchall():
-                subjectselected.append(i['subjectid'])
+                subjectselected.append(str(i['subjectid']))
+            session['selected'] = '-'.join(subjectselected)
     return render_template('/subjects.html', subjects = subjects, subjectselected = subjectselected)
 
 @app.route('/deleteSubject', methods = ['get', 'post'])

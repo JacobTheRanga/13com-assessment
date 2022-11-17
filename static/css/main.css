@@ -2,8 +2,13 @@
     animation: shake 0.5s;
   }
   
-  @keyframes shake {
-    25% { transform: translate(-5px, 0px); }
-    75% { transform: translate(5px, 0px); }
-    100% { transform: translate(0px, 0px); }
-  }
+@keyframes shake {
+  25% { transform: translate(-5px, 0px); }
+  75% { transform: translate(5px, 0px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+.green {
+  filter: invert(0.5) sepia(1) saturate(200) hue-rotate(120deg);
+  cursor: default;
+}

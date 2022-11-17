@@ -14,7 +14,9 @@ const icons = {
     'eye-slash-fill':'eye-fill'
 };
 
-var iconList = document.querySelectorAll('.'+names.join(',.'))
+sessionStorage.setItem('selectedSubjects', selectedSubmit.getAttribute('selectedSubjects'));
+
+var iconList = document.querySelectorAll('.'+names.join(',.'));
 
 iconList.forEach(icon => {
     icon.addEventListener('mouseover', iconToggle);
@@ -45,15 +47,29 @@ function iconToggle(event) {
 
 function selectSubject(id) {
     let selected = sessionStorage.getItem('selectedSubjects');
-    if (!selected) return sessionStorage.setItem('selectedSubjects', id);
+    if (!selected) {
+        eval('selectSubject'+id).classList.toggle('submit');
+        eval('selectSubject'+id).classList.toggle('green');
+        return sessionStorage.setItem('selectedSubjects', id);}
     let list = selected.split('-');
     if (list.includes(id)) return;
     if (list.length == 5) return;
     sessionStorage.setItem('selectedSubjects', selected + '-' + id);
-    if (list.length == 4) return subjectSelectionLoad();
+    eval('selectSubject'+id).classList.toggle('submit');
+    eval('selectSubject'+id).classList.toggle('green');
+    if (list.length == 4) {
+        eval('selectSubject'+id).dispatchEvent(new Event('mouseover'));
+        return subjectSelectionLoad();
+    }
 }
 
 function subjectSelectionLoad(){
+    document.querySelectorAll('.submit').forEach(button => {
+    if (selectedSubjects && selectedSubjects().includes(button.id.replace('selectSubject', ""))) {
+        button.dispatchEvent(new Event('mouseover'));
+        button.classList.toggle('submit');
+        button.classList.toggle('green');
+    }})
     if (!selectedSubjects() || selectedSubjects().length != 5) {
         selectedSubmit.disabled = true;
         selectedSubmit.removeAttribute('onclick')
@@ -67,9 +83,10 @@ function subjectSelectionLoad(){
     selectedSubmit.disabled = false;
     selectedSubmit.setAttribute('onclick', `location.href = './selectsubjects?id=${sessionStorage.getItem('selectedSubjects')}'`);
     document.querySelectorAll('.submit').forEach(button => {
-        button.style.opacity = 0.5;
+        button.style.opacity = 0.2;
         button.removeEventListener('mouseover', iconToggle);
         button.removeEventListener('mouseout', iconToggle);
+        button.style.cursor = 'default';
     })
 }
 
