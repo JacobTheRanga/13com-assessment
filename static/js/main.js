@@ -95,6 +95,7 @@ function selectSubject(id) {
         if (sessionStorage.getItem('selectedSubjects').length > 1){
             if (sessionSelected().includes(id+'')) return;
         }
+        if (sessionSelected().length == 5) return;
         sessionStorage.setItem('selectedSubjects', sessionSelected()+','+id);
     }
     else sessionStorage.setItem('selectedSubjects', id);

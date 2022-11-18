@@ -62,15 +62,17 @@ def selectSubject():
     if not session:
         return redirect(url_for('login'))
     subjects = request.args.get('id').split(',')
-    print(subjects)
     if len(subjects) != 5:
         return redirect(url_for('subjects'))
     connection = create_connection()
     with connection.cursor() as cursor:
         for subject in subjects:
-            cursor.execute('select * from subjects\
-                            where subjectid=%s',
-                            subject)
+            try:
+                cursor.execute('select * from subjects\
+                                where subjectid=%s',
+                                int(subject))
+            except:
+                return redirect(url_for('subjects'))
             if cursor.fetchall() == ():
                 return redirect(url_for('subjects'))
         cursor.execute('delete from usersubjects\
@@ -110,12 +112,20 @@ def deleteSubject():
         permission(session['role'])
     except:
         return redirect(url_for('home'))
+    subjectid = request.args.get('id')
     connection = create_connection()
     with connection.cursor() as cursor:
+        try:
+            cursor.execute('select * from subjects where subjectid=%s',
+                            int(subjectid))
+        except:
+            return redirect(url_for('subjects'))
+        if cursor.fetchall() == ():
+            return redirect(url_for('subjects'))
         cursor.execute('delete from usersubjects where subjectid=%s',   
-                        int(request.args.get('id')))
+                        int(subjectid))
         cursor.execute('delete from subjects where subjectid=%s',   
-                        int(request.args.get('id')))
+                        int(subjectid))
         connection.commit()
     return redirect(url_for('subjects'))
 
@@ -127,14 +137,17 @@ def addSubject():
         return redirect(url_for('home'))
     connection = create_connection()
     with connection.cursor() as cursor:
-        cursor.execute('insert into subjects (subjectname, start, end)\
-                        values (%s, %s, %s)',
-                        (
-                            request.form['name'],
-                            request.form['startdate'],
-                            request.form['enddate']
-                        ))
-        connection.commit()
+        try:
+            cursor.execute('insert into subjects (subjectname, start, end)\
+                            values (%s, %s, %s)',
+                            (
+                                request.form['name'],
+                                request.form['startdate'],
+                                request.form['enddate']
+                            ))
+            connection.commit()
+        except:
+            pass
     return redirect(url_for('subjects'))
 
 @app.route('/editsubject', methods = ['get', 'post'])
