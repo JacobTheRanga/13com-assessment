@@ -30,8 +30,8 @@
                 <img src="{{url_for('static', filename='img/pencil.svg')}}" height="50" width="50" class="btn edit" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')">
                 <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/trash.svg')}}" height="50" width="50" class="btn delete"></a>
                 {% else %}
-                <img src="{{url_for('static', filename='img/check-circle.svg')}}" height="50" class="btn submit" id="selectSubject{{subject['subjectid']}}" onclick="selectSubject('{{subject['subjectid']}}')">
-                <p class="text-success" id="selectedText{{subject['subjectid']}}"></p>
+                <img src="{{url_for('static', filename='img/check-circle.svg')}}" height="50" class="btn submit btn-select" id="selectSubject{{subject['subjectid']}}" onclick="selectSubject({{subject['subjectid']}})">
+                <img src="{{url_for('static', filename='img/x-circle.svg')}}" height="50" class="btn cancel none" id="cancelSubject{{subject['subjectid']}}" onclick="cancelSubject({{subject['subjectid']}})">
                 {% endif %}
             </td>
         </tr>

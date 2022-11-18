@@ -61,7 +61,8 @@ def permission(role):
 def selectSubject():
     if not session:
         return redirect(url_for('login'))
-    subjects = request.args.get('id').split('-')
+    subjects = request.args.get('id').split(',')
+    print(subjects)
     if len(subjects) != 5:
         return redirect(url_for('subjects'))
     connection = create_connection()
@@ -86,7 +87,6 @@ def selectSubject():
 
 @app.route('/subjects', methods = ['get', 'post'])
 def subjects():
-    subjectselected = []
     if not session:
         return redirect(url_for('login'))
     connection = create_connection()
@@ -99,10 +99,10 @@ def subjects():
             cursor.execute('select subjectid from usersubjects\
                             where userid=%s',
                             session['id'])
+            session['selected'] = []
             for i in cursor.fetchall():
-                subjectselected.append(str(i['subjectid']))
-            session['selected'] = '-'.join(subjectselected)
-    return render_template('/subjects.html', subjects = subjects, subjectselected = subjectselected)
+                session['selected'].append(i['subjectid'])
+    return render_template('/subjects.html', subjects = subjects)
 
 @app.route('/deleteSubject', methods = ['get', 'post'])
 def deleteSubject():

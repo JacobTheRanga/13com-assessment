@@ -14,24 +14,36 @@ const icons = {
     'eye-slash-fill':'eye-fill'
 };
 
-sessionStorage.setItem('selectedSubjects', selectedSubmit.getAttribute('selectedSubjects'));
+const subjectButtons = document.querySelectorAll('.btn-select');
 
-var iconList = document.querySelectorAll('.'+names.join(',.'));
+function sessionSelected(){
+    return sessionStorage.getItem('selectedSubjects').split(',');
+}
+
+function load(){
+    if (document.URL.includes('subjects')) {
+        try{
+            sessionStorage.getItem('selectedSubjects').length;
+            if (sessionStorage.getItem('selectedSubjects') == ['']) throw 'no data';
+        }catch{
+            sessionStorage.setItem('selectedSubjects', eval(selectedSubmit.getAttribute('selectedSubjects')));
+        }
+        subjectSelectionLoad();
+    }
+}
+
+load();
+
+const iconList = document.querySelectorAll('.'+names.join(',.'));
 
 iconList.forEach(icon => {
-    icon.addEventListener('mouseover', iconToggle);
-    icon.addEventListener('mouseout', iconToggle);
+    if (!Object.values(icon.classList).includes('btn-select')){
+        icon.addEventListener('mouseover', iconToggle);
+        icon.addEventListener('mouseout', iconToggle);
+    }
 });
 
 if (errorMessage.getAttribute('error')) error(errorMessage.getAttribute('error'));
-
-if (document.URL.includes('subjects')) subjectSelectionLoad();
-
-function selectedSubjects() {
-    let subjects = sessionStorage.getItem('selectedSubjects');
-    if (!subjects) return null;
-    return subjects.split('-');
-}
 
 function iconToggle(event) {
     let target = event.currentTarget;
@@ -45,49 +57,70 @@ function iconToggle(event) {
     });
 }
 
+function selected(id){
+    eval('selectSubject'+id).classList.add('selected');
+    iconToggle({currentTarget: eval('selectSubject'+id)});
+    eval('selectSubject'+id).removeEventListener('mouseover', iconToggle);
+    eval('selectSubject'+id).removeEventListener('mouseout', iconToggle);
+    eval('cancelSubject'+id).classList.remove('none');
+}
+
+function maxSubjects(){
+    selectedSubmit.disabled = false;
+    selectedSubmit.setAttribute('onclick', `location.href = './selectsubjects?id=${sessionStorage.getItem('selectedSubjects')}'`);
+    document.querySelectorAll('.btn-select').forEach(button => {
+        if (!Object.values(button.classList).includes('disabled-select') && !Object.values(button.classList).includes('selected')) {
+            button.classList.add('disabled-select');
+            button.removeEventListener('mouseover', iconToggle);
+            button.removeEventListener('mouseout', iconToggle);
+        }
+    })
+}
+
+function notMaxSubjects(){
+    selectedSubmit.disabled = true;
+    selectedSubmit.removeAttribute('onclick')
+    subjectButtons.forEach(button => {
+        if (Object.values(button.classList).includes('disabled-select')) button.classList.remove('disabled-select');
+        if (!Object.values(button.classList).includes('selected')){
+            button.addEventListener('mouseover', iconToggle);
+            button.addEventListener('mouseout', iconToggle);
+        }
+    });
+}
+
 function selectSubject(id) {
-    let selected = sessionStorage.getItem('selectedSubjects');
-    if (!selected) {
-        eval('selectSubject'+id).classList.toggle('submit');
-        eval('selectSubject'+id).classList.toggle('green');
-        return sessionStorage.setItem('selectedSubjects', id);}
-    let list = selected.split('-');
-    if (list.includes(id)) return;
-    if (list.length == 5) return;
-    sessionStorage.setItem('selectedSubjects', selected + '-' + id);
-    eval('selectSubject'+id).classList.toggle('submit');
-    eval('selectSubject'+id).classList.toggle('green');
-    if (list.length == 4) {
-        eval('selectSubject'+id).dispatchEvent(new Event('mouseover'));
-        return subjectSelectionLoad();
+    if (sessionStorage.getItem('selectedSubjects') == id) return;
+    if (sessionStorage.getItem('selectedSubjects') != 0) {
+        if (sessionStorage.getItem('selectedSubjects').length > 1){
+            if (sessionSelected().includes(id+'')) return;
+        }
+        sessionStorage.setItem('selectedSubjects', sessionSelected()+','+id);
     }
+    else sessionStorage.setItem('selectedSubjects', id);
+    iconToggle({currentTarget: eval('selectSubject'+id)});
+    selected(id);
+    if (sessionSelected().length == 5) return maxSubjects();
 }
 
 function subjectSelectionLoad(){
-    document.querySelectorAll('.submit').forEach(button => {
-    if (selectedSubjects && selectedSubjects().includes(button.id.replace('selectSubject', ""))) {
-        button.dispatchEvent(new Event('mouseover'));
-        button.classList.toggle('submit');
-        button.classList.toggle('green');
-    }})
-    if (!selectedSubjects() || selectedSubjects().length != 5) {
-        selectedSubmit.disabled = true;
-        selectedSubmit.removeAttribute('onclick')
-        document.querySelectorAll('.submit').forEach(button => {
-            button.style.opacity = 1;
-            button.addEventListener('mouseover', iconToggle);
-            button.addEventListener('mouseout', iconToggle);
-        });
-        return
-    }
-    selectedSubmit.disabled = false;
-    selectedSubmit.setAttribute('onclick', `location.href = './selectsubjects?id=${sessionStorage.getItem('selectedSubjects')}'`);
-    document.querySelectorAll('.submit').forEach(button => {
-        button.style.opacity = 0.2;
-        button.removeEventListener('mouseover', iconToggle);
-        button.removeEventListener('mouseout', iconToggle);
-        button.style.cursor = 'default';
+    subjectButtons.forEach(button => {
+        if (sessionSelected().includes(button.id.replace('selectSubject', ""))) selected(button.id.replace('selectSubject', ''));
     })
+    if (sessionSelected().length != 5) return notMaxSubjects();
+    return maxSubjects();
+}
+
+function cancelSubject(id){
+    let selected = sessionSelected();
+    selected.splice(selected.indexOf(id+''), 1);
+    document.querySelectorAll('.selected').forEach(n => {
+        iconToggle({currentTarget: n});
+    });
+    eval('selectSubject'+id).classList.remove('selected');
+    eval('cancelSubject'+id).classList.add('none');
+    sessionStorage.setItem('selectedSubjects', selected);
+    subjectSelectionLoad();
 }
 
 function passwordView() {
