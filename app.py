@@ -62,7 +62,7 @@ def selectSubject():
     if not session:
         return redirect(url_for('login'))
     subjects = request.args.get('id').split(',')
-    if len(subjects) != 5:
+    if len(set(subjects)) != 5:
         return redirect(url_for('subjects'))
     connection = create_connection()
     with connection.cursor() as cursor:
@@ -156,21 +156,27 @@ def editSubject():
         permission(session['role'])
     except:
         return redirect(url_for('home'))
+    subjectid = request.args.get('id')
     connection = create_connection()
     with connection.cursor() as cursor:
-        subject = request.args.get('id')
-        cursor.execute('update subjects set\
-                        subjectname = %s,\
-                        start = %s,\
-                        end = %s\
-                        where subjectid = %s',
-                        (
-                            request.form['subjectNameInput'+subject],
-                            request.form['subjectStartDateInput'+subject],
-                            request.form['subjectEndDateInput'+subject],
-                            subject
-                        ))
-        connection.commit()
+        if request.method != 'POST':
+            cursor.execute('select * from subjects where subjectid = %s', subjectid)
+            return render_template('editSubject.html', subjectid = subjectid, subjectdata = cursor.fetchone())
+        try:
+            cursor.execute('update subjects set\
+                            subjectname = %s,\
+                            start = %s,\
+                            end = %s\
+                            where subjectid = %s',
+                            (
+                                request.form['name'],
+                                request.form['startDate'],
+                                request.form['endDate'],
+                                subjectid
+                            ))
+            connection.commit()
+        except:
+            pass
     return redirect(url_for('subjects'))
 
 if __name__ == "__main__":

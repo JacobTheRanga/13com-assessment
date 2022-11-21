@@ -66,15 +66,17 @@ function selected(id){
 }
 
 function maxSubjects(){
-    selectedSubmit.disabled = false;
-    selectedSubmit.setAttribute('onclick', `location.href = './selectsubjects?id=${sessionStorage.getItem('selectedSubjects')}'`);
-    document.querySelectorAll('.btn-select').forEach(button => {
-        if (!Object.values(button.classList).includes('disabled-select') && !Object.values(button.classList).includes('selected')) {
-            button.classList.add('disabled-select');
-            button.removeEventListener('mouseover', iconToggle);
-            button.removeEventListener('mouseout', iconToggle);
-        }
-    })
+    try{
+        selectedSubmit.disabled = false;
+        selectedSubmit.setAttribute('onclick', `location.href = './selectsubjects?id=${sessionStorage.getItem('selectedSubjects')}'`);
+        document.querySelectorAll('.btn-select').forEach(button => {
+            if (!Object.values(button.classList).includes('disabled-select') && !Object.values(button.classList).includes('selected')) {
+                button.classList.add('disabled-select');
+                button.removeEventListener('mouseover', iconToggle);
+                button.removeEventListener('mouseout', iconToggle);
+            }
+        })
+    }catch{}
 }
 
 function notMaxSubjects(){

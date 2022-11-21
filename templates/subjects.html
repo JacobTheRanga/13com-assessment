@@ -27,7 +27,7 @@
             <td>{{subject['end']}}</td>
             <td>
                 {% if session['role'] == 'admin' %}
-                <img src="{{url_for('static', filename='img/pencil.svg')}}" height="50" width="50" class="btn edit" id="editSubject{{subject['subjectid']}}" onclick="editSubject('{{subject['subjectid']}}')">
+                <a href="{{url_for('editSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/pencil.svg')}}" height="50" width="50" class="btn edit" id="editSubject{{subject['subjectid']}}"></a>
                 <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/trash.svg')}}" height="50" width="50" class="btn delete"></a>
                 {% else %}
                 <img src="{{url_for('static', filename='img/check-circle.svg')}}" height="50" class="btn submit btn-select" id="selectSubject{{subject['subjectid']}}" onclick="selectSubject({{subject['subjectid']}})">
