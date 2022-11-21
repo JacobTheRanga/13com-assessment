@@ -31,7 +31,7 @@
             <td>{{subject['start']}}</td>
             <td>{{subject['end']}}</td>
             <td>
-                {% if session['role'] == 'admin' and session['edit'] == False%}
+                {% if session['role'] == 'admin' and session['edit'] == False %}
                 <a href="{{url_for('editSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/pencil.svg')}}" height="50" width="50" class="btn edit" id="editSubject{{subject['subjectid']}}"></a>
                 <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/trash.svg')}}" height="50" width="50" class="btn delete"></a>
                 {% else %}

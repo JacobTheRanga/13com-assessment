@@ -48,11 +48,6 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
-@app.route('/register', methods = ['get', 'post'])
-def register():
-    if request.method != 'POST':
-        return render_template('/register.html')
-
 def permission(role):
     if role == 'admin':
         return True
@@ -264,6 +259,29 @@ def viewUsers():
             cursor.execute('select * from users where role="user"')
             userdata = cursor.fetchall()
             return render_template('userview.html', users=userdata)
+        prefix = ['users.lastname=', 'users.firstname=', 'subjects.subjectname=']
+        inputs = [request.form['lastname'], request.form['firstname'], request.form['subject']]
+        try:
+            if inputs == ['', '', '']:
+                raise
+            query = 'select * from usersubjects\
+                    join users on users.userid = usersubjects.userid\
+                    join subjects on subjects.subjectid = usersubjects.subjectid\
+                    where'
+            for i in range(3):
+                if inputs[i] != '':
+                    query += ' ' + prefix[i] + "'"+inputs[i]+"'" + ' and'
+            cursor.execute(query[:-4])
+            users = cursor.fetchall()
+            userids = []
+            newusers = []
+            for i in users:
+                if i['userid'] not in userids:
+                    userids.append(i['userid'])
+                    newusers.append(i)
+            return render_template('userview.html', users = newusers)
+        except:
+            return redirect(url_for('viewUsers'))
 
 @app.route('/edituser', methods = ['get', 'post'])
 def editUser():
