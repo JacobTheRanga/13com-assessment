@@ -2,6 +2,8 @@
 
 {% block title %}Login{% endblock %}
 
+{% block icon %}{{url_for('static', filename='img/subject.png')}}{% endblock %}
+
 {% block form %}
 <div class="form-floating">
     <input type="text" name="email" class="form-control" id="email" placeholder="Email" required>
@@ -13,7 +15,7 @@
         <label for="password">Password</label>
     </div>
     <div for="password" class="border d-flex align-items-center justify-content-center col-2">
-        <img src="{{url_for('static', filename='img/eye-slash-fill.svg')}}" class="btn" id="togglePassword" onclick="passwordView()">
+        <img src="{{url_for('static', filename='img/eye-slash-fill.svg')}}" class="btn view" id="togglePassword" onclick="passwordView()">
     </div>
 </div>
 

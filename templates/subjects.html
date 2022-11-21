@@ -1,12 +1,17 @@
 {% extends 'layout.html' %}
 
-{% block title %}Subjects{% endblock %}
+{% block title %}{% if session['role'] == 'admin' and session['edit'] == True %}Edit {{user['firstname']}} {{user['lastname']}}'s Subjects{% else %}Subjects{% endif %}{% endblock %}
 
 {% block body %}
 <div class="row">
     <div class="col-auto me-auto order-1 text-center">
-        <p class="display-5 fw-bold">Subjects</p>
+        <p class="display-5 fw-bold">{% if session['role'] == 'admin' and session['edit'] == True %}Edit {{user['firstname']}} {{user['lastname']}}'s Subjects{% else %}Subjects{% endif %}</p>
     </div>
+    {% if session['role'] == 'admin' and session['edit'] == True %}
+    <div class="col order-2">
+        <a href="{{url_for('viewUsers')}}"><button class="w-100 btn btn-lg bg-primary text-white">Go Back</button></a>
+    </div>
+    {% endif %}
 </div>
 <table class="table">
     <thead>
@@ -26,7 +31,7 @@
             <td>{{subject['start']}}</td>
             <td>{{subject['end']}}</td>
             <td>
-                {% if session['role'] == 'admin' %}
+                {% if session['role'] == 'admin' and session['edit'] == False%}
                 <a href="{{url_for('editSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/pencil.svg')}}" height="50" width="50" class="btn edit" id="editSubject{{subject['subjectid']}}"></a>
                 <a href="{{url_for('deleteSubject')}}?id={{subject['subjectid']}}"><img src="{{url_for('static', filename='img/trash.svg')}}" height="50" width="50" class="btn delete"></a>
                 {% else %}
@@ -36,7 +41,7 @@
             </td>
         </tr>
         {% endfor %}
-        {% if session['role'] == 'admin' %}
+        {% if session['role'] == 'admin' and session['edit'] == False %}
         <form method="post" action="{{url_for('addSubject')}}" id="formAddSubject">
             <tr>
                 <th scope="row">{{subjects|length+1}}</th>
@@ -66,7 +71,7 @@
         {% else %}
         <tr>
             <th scope="row">
-                <button id="selectedSubmit" selectedSubjects="{{session['selected']}}" disabled>submit :)</button>
+                <button userid="{% if session['role'] == 'admin' and session['edit'] == True %}{{user['userid']}}{% else %}user{% endif %}" id="selectedSubmit" selectedSubjects="{{session['selected']}}" disabled>submit :)</button>
             </th>
         </tr>
         {% endif %}

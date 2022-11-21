@@ -2,6 +2,8 @@
 
 {% block title %}Edit Subject{% endblock %}
 
+{% block icon %}{{url_for('static', filename='img/pencil-fill.svg')}}{% endblock %}
+
 {% block form %}
 <h1>{{subjectdata['subjectname']}}</h1>
 <hr class="my-3">

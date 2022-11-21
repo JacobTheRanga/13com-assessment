@@ -3,7 +3,8 @@ const names = ['edit',
                  'submit',
                  'cancel',
                  'add',
-                 'view'
+                 'view',
+                 'infoview'
                 ];
 const icons = {
     'pencil':'pencil-fill',
@@ -11,7 +12,8 @@ const icons = {
     'check-circle':'check-circle-fill',
     'x-circle':'x-circle-fill',
     'plus-circle':'plus-circle-fill',
-    'eye-slash-fill':'eye-fill'
+    'eye-slash-fill':'eye-fill',
+    'eye':'eye-fill'
 };
 
 const subjectButtons = document.querySelectorAll('.btn-select');
@@ -25,8 +27,9 @@ function load(){
         try{
             sessionStorage.getItem('selectedSubjects').length;
             if (sessionStorage.getItem('selectedSubjects') == ['']) throw 'no data';
+            if (selectedSubmit.getAttribute('userid') != 'user') throw 'admin is here';
         }catch{
-            sessionStorage.setItem('selectedSubjects', eval(selectedSubmit.getAttribute('selectedSubjects')));
+            try{sessionStorage.setItem('selectedSubjects', eval(selectedSubmit.getAttribute('selectedSubjects')));}catch{}
         }
         subjectSelectionLoad();
     }
@@ -37,7 +40,7 @@ load();
 const iconList = document.querySelectorAll('.'+names.join(',.'));
 
 iconList.forEach(icon => {
-    if (!Object.values(icon.classList).includes('btn-select')){
+    if (!Object.values(icon.classList).includes('btn-select') || !Object.values(icon.classList).includes('view')){
         icon.addEventListener('mouseover', iconToggle);
         icon.addEventListener('mouseout', iconToggle);
     }
@@ -68,7 +71,12 @@ function selected(id){
 function maxSubjects(){
     try{
         selectedSubmit.disabled = false;
-        selectedSubmit.setAttribute('onclick', `location.href = './selectsubjects?id=${sessionStorage.getItem('selectedSubjects')}'`);
+        if (selectedSubmit.getAttribute('userid') == 'user'){
+            selectedSubmit.setAttribute('onclick', `location.href = './selectsubjects?id=${sessionStorage.getItem('selectedSubjects')}'`);
+        }
+        else{
+            selectedSubmit.setAttribute('onclick', `location.href = './selectsubjects?id=${sessionStorage.getItem('selectedSubjects')}&userid=${selectedSubmit.getAttribute('userid')}'`);
+        }
         document.querySelectorAll('.btn-select').forEach(button => {
             if (!Object.values(button.classList).includes('disabled-select') && !Object.values(button.classList).includes('selected')) {
                 button.classList.add('disabled-select');
@@ -129,7 +137,7 @@ function cancelSubject(id){
 function passwordView() {
     const type = password.getAttribute('type') == 'password' ? 'text' : 'password';
     password.setAttribute('type', type);
-    iconToggle('togglePassword', 'view');
+    iconToggle({currentTarget: togglePassword});
 }
 
 function error(error) {

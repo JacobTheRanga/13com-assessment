@@ -1,0 +1,100 @@
+{% extends 'layout.html' %}
+
+{% block title %}View Users{% endblock %}
+
+{% block body %}
+<form method="post">
+    <div class="row">
+        <div class="col-auto me-auto order-1 text-center">
+            <p class="display-5 fw-bold">View Users</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="form-floating">
+                <input type="text" name="lastname" class="form-control" id="lastname" placeholder="lastname">
+                <label for="lastname">Last Name</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+                <input type="text" name="firstname" class="form-control" id="firstname" placeholder="firstname">
+                <label for="firstname">First Name</label>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating">
+                <input type="text" name="subject" class="form-control" id="subject" placeholder="subject">
+                <label for="subject">Subject</label>
+            </div>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-lg bg-primary text-white" type="submit"><img src="{{url_for('static', filename='img/search.svg')}}"> Search</button>
+        </div>
+    </div>
+</form>
+<hr class="my-3">
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">View/edit</th>
+        </tr>
+    </thead>
+    <tbody id="tbody">
+        {% for user in users %}
+        <tr>
+            <th scope="row">{{users.index(user)+1}}</th>
+            <td>{{user['lastname']}}</td>
+            <td>{{user['firstname']}}</td>
+            <td>{{user['email']}}</td>
+            <td>
+                <a href="{{url_for('editUser')}}?id={{user['userid']}}"><img src="{{url_for('static', filename='img/pencil.svg')}}" height="50" width="50" class="btn edit"></a>
+                <a href="{{url_for('viewUserSubjects')}}?id={{user['userid']}}"><img src="{{url_for('static', filename='img/eye.svg')}}" height="50" width="50" class="btn infoview"></a>
+            </td>
+        </tr>
+        {% endfor %}
+        <form method="post" action="{{url_for('addUser')}}">
+            <tr>
+                <th scope="row">{{users|length+1}}</th>
+                <td>
+                    <div class="form-floating">
+                        <input type="text" name="addfirstname" class="form-control" id="addfirstname" placeholder="addfirstname" required>
+                        <label for="addfirstname">First Name</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-floating">
+                        <input type="text" name="addlastname" class="form-control" id="addlastname" placeholder="addlastname" required>
+                        <label for="addlastname">Last Name</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-floating">
+                        <input type="text" name="addemail" class="form-control" id="addemail" placeholder="addemail" required>
+                        <label for="addemail">Email</label>
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group mb-3">
+                        <div class="form-floating col-10">
+                            <input type="password" name="addpassword" class="form-control" id="addpassword" placeholder="addpassword" required>
+                            <label for="addpassword">Password</label>
+                        </div>
+                        <div for="password" class="border d-flex align-items-center justify-content-center col-2">
+                            <img src="{{url_for('static', filename='img/eye-slash-fill.svg')}}" class="btn view" id="togglePassword" onclick="passwordView()">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <input type="image" class="btn add" src="{{url_for('static', filename='img/plus-circle.svg')}}" height="50" width="50" id="addSubject">
+                </td>
+            </tr>
+        </form>
+    </tbody>
+</table>
+<p id="errorMessage" error=""></p>
+{% endblock %}
