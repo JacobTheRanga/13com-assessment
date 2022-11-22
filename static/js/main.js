@@ -16,6 +16,33 @@ const icons = {
     'eye':'eye-fill'
 };
 
+var bg = document.querySelectorAll('.bg-dark, .bg-white');
+var txt = document.querySelectorAll('.text-white, .text-dark');
+var img = document.querySelectorAll('img,.btn');
+
+function themeToggle(){
+    bg.forEach(n =>{
+        n.classList.toggle('bg-dark');
+        n.classList.toggle('bg-white');
+    });
+    txt.forEach(n =>{
+        n.classList.toggle('text-white');
+        n.classList.toggle('text-dark');
+    });
+    img.forEach(n =>{
+        n.classList.toggle('inverted');
+    })
+}
+
+function colorToggle(){
+    sessionStorage.setItem('colorToggle', sessionStorage.getItem('colorToggle') == 'light' ? 'dark' : 'light');
+    colorToggleBtn.innerHTML = sessionStorage.getItem('colorToggle') == 'light' ? 'Dark Theme' : 'Light Theme';
+    themeToggle();
+}
+
+function fontToggle(){
+}
+
 const subjectButtons = document.querySelectorAll('.btn-select');
 
 function sessionSelected(){
@@ -31,8 +58,19 @@ function load(){
         }catch{
             try{sessionStorage.setItem('selectedSubjects', eval(selectedSubmit.getAttribute('selectedSubjects')));}catch{}
         }
-        subjectSelectionLoad();
+        try{sessionStorage.getItem('selectedSubjects').length;subjectSelectionLoad();}catch{}
     }
+    try{
+        sessionStorage.getItem('colorToggle').length; 
+        if (sessionStorage.getItem('colorToggle') == 'dark') {
+            colorToggleBtn.innerHTML = sessionStorage.getItem('colorToggle') == 'light' ? 'Dark Theme' : 'Light Theme';
+            themeToggle();
+        }
+    }
+    catch{sessionStorage.setItem('colorToggle', 'light')}
+    try{sessionStorage.getItem('fontToggle').length;}
+    catch{sessionStorage.setItem('fontToggle', 'default')}
+    colorToggleBtn.innerHTML = sessionStorage.getItem('colorToggle') == 'light' ? 'Dark Theme' : 'Light Theme';
 }
 
 load();
@@ -46,7 +84,7 @@ iconList.forEach(icon => {
     }
 });
 
-if (errorMessage.getAttribute('error')) error(errorMessage.getAttribute('error'));
+try{error(errorMessage.getAttribute('error'));}catch{}
 
 function iconToggle(event) {
     let target = event.currentTarget;
@@ -147,5 +185,5 @@ function error(error) {
 
 function errorLogin(error) {
     eval(error).classList.toggle('is-invalid');
-    errorMessage.innerHTML = error == 'email' ? 'There is no user with this email' : 'Password is incorrect';
+    eval(error+'Error').classList.toggle('none');
 }

@@ -2,33 +2,36 @@
 
 {% block main %}
 <header>
-    <div class="px-3 py-2 bg-white">
+    <div id="nav" class="px-3 py-2 bg-white">
       <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
           <a href="{{url_for('home')}}" class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-black text-decoration-none">
-            <img src="{{url_for('static', filename='img/subject.png')}}" height="50" width="50">
+            <img src="{{url_for('static', filename='img/check2-square.svg')}}" height="50" width="50">
           </a>
 
           <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
             <li>
-              <a href="{{url_for('subjects')}}" class="nav-link text-secondary">
+              <a href="{{url_for('subjects')}}" class="nav-link text-secondary text-dark">
                 Subjects
               </a>
             </li>
             {% if session['role'] == 'admin' %}
             <li>
-              <a href="{{url_for('viewUsers')}}" class="nav-link text-secondary">
+              <a href="{{url_for('viewUsers')}}" class="nav-link text-secondary text-dark">
                 View Users
               </a>
             </li>
             {% endif %}
             <div class="dropdown text-end">
-              <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+              <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle text-dark" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                 {{session['user']}}
-                <img src="{{url_for('static', filename='img/account.png')}}" alt="account" width="40" height="40" class="rounded-circle">
+                <img src="{{url_for('static', filename='img/person-circle.svg')}}" alt="account" width="40" height="40" class="rounded-circle">
               </a>
-              <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                <li><a class="dropdown-item" href="{{url_for('logout')}}">Logout<img src ="{{url_for('static', filename='img/logout.png')}}" width="20" height="20" class="ms-3"></a></li>
+              <ul class="dropdown-menu text-small bg-white" aria-labelledby="dropdownUser1">
+                <li><a class="dropdown-item text-dark" href="{{url_for('logout')}}">Logout<img src="{{url_for('static', filename='img/box-arrow-right.svg')}}" width="20" height="20" class="ms-3"></a></li>
+                <li><hr class="dropdown-divider text-dark"></li>
+                <li id="colorToggleBtn" onclick="colorToggle()" class="dropdown-item cursor text-dark"></li>
+                <li id="fontToggleBtn" onclick="fontToggle()" class="dropdown-item cursor text-dark"></li>
               </ul>
             </div>
           </ul>

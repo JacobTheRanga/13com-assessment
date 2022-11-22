@@ -5,7 +5,7 @@
 {% block body %}
 <div class="row">
     <div class="col-auto me-auto order-1 text-center">
-        <p class="display-5 fw-bold">{% if session['role'] == 'admin' and session['edit'] == True %}Edit {{user['firstname']}} {{user['lastname']}}'s Subjects{% else %}Subjects{% endif %}</p>
+        <p class="display-5 fw-bold text-dark">{% if session['role'] == 'admin' and session['edit'] == True %}Edit {{user['firstname']}} {{user['lastname']}}'s Subjects{% else %}Subjects{% endif %}</p>
     </div>
     {% if session['role'] == 'admin' and session['edit'] == True %}
     <div class="col order-2">
@@ -13,7 +13,7 @@
     </div>
     {% endif %}
 </div>
-<table class="table">
+<table class="table text-dark bg-white">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -47,19 +47,19 @@
                 <th scope="row">{{subjects|length+1}}</th>
                 <td>
                     <div class="form-floating">
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Name" required>
+                        <input type="text" name="name" class="form-control text-dark bg-white" id="name" placeholder="Name" required>
                         <label for="name">Subject Name</label>
                     </div>
                 </td>
                 <td>
                     <div class="form-floating">
-                        <input type="date" name="startdate" class="form-control" id="startdate" placeholder="StartDate" required>
+                        <input type="date" name="startdate" class="form-control text-dark bg-white" id="startdate" placeholder="StartDate" required>
                         <label for="startdate">Start Date</label>
                     </div>
                 </td>
                 <td>
                     <div class="form-floating">
-                        <input type="date" name="enddate" class="form-control" id="enddate" placeholder="EndDate" required>
+                        <input type="date" name="enddate" class="form-control text-dark bg-white" id="enddate" placeholder="EndDate" required>
                         <label for="enddate">End Date</label>
                     </div>
                 </td>

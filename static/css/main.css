@@ -22,3 +22,11 @@
 .none {
   display: none;
 }
+
+.inverted{
+  filter: invert(1);
+}
+
+.cursor:hover{
+  cursor:pointer;
+}

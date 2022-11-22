@@ -20,7 +20,7 @@ def create_connection():
 def home():
     if not session:
         return redirect(url_for('login'))
-    return render_template('/layout.html')
+    return render_template('home.html')
 
 @app.route('/login', methods = ['get', 'post'])
 def login():
@@ -191,7 +191,7 @@ def addUser():
                                 request.form['addfirstname'],
                                 request.form['addlastname'],
                                 request.form['addemail'],
-                                pbkdf2_sha256.hash(request.form['addpassword'])
+                                pbkdf2_sha256.hash(request.form['password'])
                             ))
             connection.commit()
         except:

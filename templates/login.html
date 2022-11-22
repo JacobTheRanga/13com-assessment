@@ -2,12 +2,15 @@
 
 {% block title %}Login{% endblock %}
 
-{% block icon %}{{url_for('static', filename='img/subject.png')}}{% endblock %}
+{% block icon %}{{url_for('static', filename='img/check2-square.svg')}}{% endblock %}
 
 {% block form %}
 <div class="form-floating">
     <input type="text" name="email" class="form-control" id="email" placeholder="Email" required>
     <label for="email">Email</label>
+</div>
+<div id="emailError" class="row none">
+    <p class="text-danger"><img height="20" src="{{url_for('static', filename='img/exclamation-circle.svg')}}"> There is no user with this email</p>
 </div>
 <div class="input-group mb-3">
     <div class="form-floating col-10">
@@ -18,7 +21,9 @@
         <img src="{{url_for('static', filename='img/eye-slash-fill.svg')}}" class="btn view" id="togglePassword" onclick="passwordView()">
     </div>
 </div>
-
+<div id="passwordError" class="row none">
+    <p class="text-danger"><img height="20" src="{{url_for('static', filename='img/exclamation-circle.svg')}}"> Password is incorrect</p>
+</div>
 <div class="checkbox mb-3">
     <label>
         <input type="checkbox" value="remember-me"> Remember me
