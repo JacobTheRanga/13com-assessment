@@ -40,7 +40,7 @@ load();
 const iconList = document.querySelectorAll('.'+names.join(',.'));
 
 iconList.forEach(icon => {
-    if (!Object.values(icon.classList).includes('btn-select') || !Object.values(icon.classList).includes('view')){
+    if (!Object.values(icon.classList).includes('btn-select') && !Object.values(icon.classList).includes('view')){
         icon.addEventListener('mouseover', iconToggle);
         icon.addEventListener('mouseout', iconToggle);
     }
