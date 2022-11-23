@@ -6,16 +6,16 @@
 
 {% block form %}
 <div class="form-floating">
-    <input type="text" name="email" class="form-control" id="email" placeholder="Email" required>
-    <label for="email">Email</label>
+    <input type="text" name="email" class="form-control text-dark bg-white" id="email" placeholder="Email" required>
+    <label for="email" class="text-dark">Email</label>
 </div>
 <div id="emailError" class="row none">
     <p class="text-danger"><img height="20" src="{{url_for('static', filename='img/exclamation-circle.svg')}}"> There is no user with this email</p>
 </div>
 <div class="input-group mb-3">
     <div class="form-floating col-10">
-        <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
-        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control text-dark bg-white" id="password" placeholder="Password" required>
+        <label for="password" class="text-dark">Password</label>
     </div>
     <div for="password" class="border d-flex align-items-center justify-content-center col-2">
         <img src="{{url_for('static', filename='img/eye-slash-fill.svg')}}" class="btn view" id="togglePassword" onclick="passwordView()">
@@ -24,11 +24,11 @@
 <div id="passwordError" class="row none">
     <p class="text-danger"><img height="20" src="{{url_for('static', filename='img/exclamation-circle.svg')}}"> Password is incorrect</p>
 </div>
-<div class="checkbox mb-3">
+<div class="checkbox mb-3 text-dark">
     <label>
         <input type="checkbox" value="remember-me"> Remember me
     </label>
 </div>
-<hr class="my-3">
+<hr class="my-3 text-dark">
 <button class="w-100 btn btn-lg bg-primary text-white" type="submit">Sign in</button>
 {% endblock %}

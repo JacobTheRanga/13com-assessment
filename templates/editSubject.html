@@ -5,20 +5,20 @@
 {% block icon %}{{url_for('static', filename='img/pencil-fill.svg')}}{% endblock %}
 
 {% block form %}
-<h1>{{subjectdata['subjectname']}}</h1>
+<h1 class="text-dark">{{subjectdata['subjectname']}}</h1>
 <hr class="my-3">
 <div class="form-floating">
-    <input type="text" name="name" class="form-control" id="name" placeholder="name" value="{{subjectdata['subjectname']}}">
-    <label for="name">Name</label>
+    <input type="text" name="name" class="form-control text-dark bg-white" id="name" placeholder="name" value="{{subjectdata['subjectname']}}">
+    <label for="name" class="text-dark">Name</label>
 </div>
 <div class="form-floating">
-    <input type="date" name="startDate" class="form-control" id="startDate" placeholder="startDate" value="{{subjectdata['start']}}">
-    <label for="startDate">Start Date</label>
+    <input type="date" name="startDate" class="form-control text-dark bg-white" id="startDate" placeholder="startDate" value="{{subjectdata['start']}}">
+    <label for="startDate" class="text-dark">Start Date</label>
 </div>
 <div class="form-floating">
-    <input type="date" name="endDate" class="form-control" id="endDate" placeholder="endDate" value="{{subjectdata['end']}}">
-    <label for="endDate">End Date</label>
+    <input type="date" name="endDate" class="form-control text-dark bg-white" id="endDate" placeholder="endDate" value="{{subjectdata['end']}}">
+    <label for="endDate" class="text-dark">End Date</label>
 </div>
-<hr class="my-3">
+<hr class="my-3 text-dark">
 <button class="w-100 btn btn-lg bg-primary text-white" type="submit">Save Changes</button>
 {% endblock %}

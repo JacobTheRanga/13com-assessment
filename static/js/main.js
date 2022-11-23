@@ -17,7 +17,7 @@ const icons = {
 };
 
 var bg = document.querySelectorAll('.bg-dark, .bg-white');
-var txt = document.querySelectorAll('.text-white, .text-dark');
+var bwtxt = document.querySelectorAll('.text-white, .text-dark');
 var img = document.querySelectorAll('img,.btn');
 
 function themeToggle(){
@@ -25,7 +25,7 @@ function themeToggle(){
         n.classList.toggle('bg-dark');
         n.classList.toggle('bg-white');
     });
-    txt.forEach(n =>{
+    bwtxt.forEach(n =>{
         n.classList.toggle('text-white');
         n.classList.toggle('text-dark');
     });
@@ -40,7 +40,14 @@ function colorToggle(){
     themeToggle();
 }
 
+function textToggle(){
+    document.querySelector('body').classList.toggle('dyslexic');
+}
+
 function fontToggle(){
+    sessionStorage.setItem('fontToggle', sessionStorage.getItem('fontToggle') == 'default' ? 'dyslexic': 'default');
+    fontToggleBtn.innerHTML = sessionStorage.getItem('fontToggle') == 'default' ? 'Dyslexic Font' : 'Default Font';
+    textToggle();
 }
 
 const subjectButtons = document.querySelectorAll('.btn-select');
@@ -62,15 +69,17 @@ function load(){
     }
     try{
         sessionStorage.getItem('colorToggle').length; 
-        if (sessionStorage.getItem('colorToggle') == 'dark') {
-            colorToggleBtn.innerHTML = sessionStorage.getItem('colorToggle') == 'light' ? 'Dark Theme' : 'Light Theme';
-            themeToggle();
-        }
+        if (sessionStorage.getItem('colorToggle') == 'dark') themeToggle();
     }
     catch{sessionStorage.setItem('colorToggle', 'light')}
-    try{sessionStorage.getItem('fontToggle').length;}
+    try{
+        sessionStorage.getItem('fontToggle').length;
+        if (sessionStorage.getItem('fontToggle') == 'dyslexic') textToggle();
+    }
     catch{sessionStorage.setItem('fontToggle', 'default')}
+    try{
     colorToggleBtn.innerHTML = sessionStorage.getItem('colorToggle') == 'light' ? 'Dark Theme' : 'Light Theme';
+    fontToggleBtn.innerHTML = sessionStorage.getItem('fontToggle') == 'default' ? 'Dyslexic Font' : 'Default Font';}catch{}
 }
 
 load();

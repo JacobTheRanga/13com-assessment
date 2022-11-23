@@ -30,3 +30,25 @@
 .cursor:hover{
   cursor:pointer;
 }
+
+@font-face {
+  font-family: dyslexic-font;
+  src: url('../fonts/dyslexic.otf') format('opentype');
+}
+
+.dyslexic{
+  font-family: dyslexic-font;
+}
+
+html, body{
+  width:100%;
+  min-height: 100%;
+}
+
+table{
+  table-layout: fixed;
+}
+
+td{
+  word-wrap: break-word;
+}
